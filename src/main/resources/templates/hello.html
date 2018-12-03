@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<meta charset="UTF-8" />
+	<title th:text="'Spring Boot: MVC + Thymeleaf + Data JPA - ' + ${titulo}"></title>
+	<link rel="stylesheet"	th:href="@{/css/bootstrap.css}" />
+	<link rel="stylesheet"	th:href="@{/css/jquery-ui.min.css}" />
+	<link rel="stylesheet"	th:href="@{/css/dataTables.bootstrap4.min.css}" />
+	<link rel="stylesheet"	th:href="@{/css/select.bootstrap4.min.css}" /> 
+	<link rel="stylesheet"	th:href="@{/css/estilos.css}" /> 
+	
+	<!-- styles --> 
+	<link rel="stylesheet"	th:href="@{/css/introjs/bootstrap.min.css}" /> 
+	<link rel="stylesheet"	th:href="@{/css/introjs/demo.css}" />
+	
+	<!-- Add IntroJs styles -->
+	<link rel="stylesheet"	th:href="@{/css/introjs/introjs.css}" />	
+	<link rel="stylesheet"	th:href="@{/css/introjs/introjs-rtl.css}" />
+	<link rel="stylesheet"	th:href="@{/css/introjs/bootstrap-responsive.min.css}" />
+	
+<body>
+
+	<div class="container py-4">
+	  <div class="jumbotron">
+        <h1 data-step="1" data-intro="This is a tooltip!">Basic Usage</h1>
+        <p class="lead" data-step="4" data-intro="Another step.">This is the basic usage of IntroJs, with <code>data-step</code> and <code>data-intro</code> attributes.</p>
+        <a class="btn btn-large btn-success" href="javascript:void(0);" onclick="javascript:introJs().start();">Show me how</a>
+      </div>
+		<div class="card bg-light">
+			<div class="card-header bg-primary text-white">
+				<h3 > Registro de Bibliografía Docente</h3>
+			</div>
+			<div class="card-body lead text-justify" data-step="2" data-intro="Lee esto">			 
+       	   		<p>Para prestar el servicio educativo las universidades peruanas deberán obtener la Licencia de Funcionamiento Institucional,  por lo que la Superintendencia Nacional de Educación Superior - SUNEDU verificará que las universidades cumplan con las condiciones básica de calidad (CBC), entre ellas con la Infraestructura y equipamiento adecuado para el cumplimiento de sus funciones: aulas, bibliotecas, laboratorios, etc. 
+           		</p>
+	           <p>
+	               En cuanto al material bibliográfico precisa que este debe existir según los planes de estudio de sus escuelas. El acervo bibliográfico puede ser en físico y/o virtual. Las bibliotecas virtuales deben estar suscritas
+	           </p>
+	           <p>
+	               El acervo bibliográfico no debe superar los tres años de antigüedad y deberá existir en la cantidad suficiente para la consulta de alumnos.
+	           </p>
+	           <p>
+	               Por lo expuesto, le rogamos llenar el formato adjunto con todas las especificaciones solicitadas, para cumplir con las exigencias de la SUNEDU y que la bibliografía pueda adquirirse a la brevedad posible.
+	           </p>        
+					
+			</div>
+		</div>
+	</div>
+
+		<!-- <script th:src="@{/js/jquery-3.3.1.js}"></script>
+		<script th:src="@{/js/popper.min.js}"></script>
+		<script th:src="@{/js/bootstrap.min.js}"></script>
+		<script th:src="@{/js/jquery-ui.min.js}"></script> 
+		 <script th:src="@{/js/jquery.dataTables.min.js}"></script>
+		<script th:src="@{/js/dataTables.bootstrap4.min.js}"></script>
+		<script th:src="@{/js/dataTables.select.min.js}"></script>
+		<script th:src="@{/js/sweetalert2.all.js}"></script>  -->
+		<script th:src="@{/js/intro.js}"></script>
+</body>
+</html>
