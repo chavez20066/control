@@ -1,0 +1,26 @@
+.mayusculas{
+	text-transform: uppercase;
+}
+.bg-ucsm{
+	background-color: #dfffe6;
+}
+#tbl_titulos tbody tr {
+	cursor: pointer;
+    transition: all 600ms;
+ 	
+}
+.puntero{
+	cursor: pointer;
+}
+#tbl_titulos tbody tr.selected {  
+    color: #ffffff;
+    background-color: #2a87e7 !important;
+    border-color: #b8daff;
+}
+#tbl_titulos tbody tr:hover {
+    color: #ffffff;
+    background-color: #2a87e7 !important;
+    border-color: #b8daff;
+    opacity:0.8;
+    transform:scale(1.05,1.05);  
+}
