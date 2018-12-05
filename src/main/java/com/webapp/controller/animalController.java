@@ -23,10 +23,10 @@ import com.webapp.entity.Cliente;
 import com.webapp.paginator.PageRender;
 
 @Controller 
-public class animalController {
+public class AnimalController {
 	
 	//protected final Log logger = LogFactory.getLog(this.getClass());
-	private static final Log LOG = LogFactory.getLog(animalController.class);
+	private static final Log LOG = LogFactory.getLog(AnimalController.class);
 	
 	
 	@Autowired

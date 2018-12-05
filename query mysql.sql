@@ -21,6 +21,9 @@ SELECT CURDATE();
 
 select * from turno
 
+select * from users
+
+select * from authorities
 
 
 

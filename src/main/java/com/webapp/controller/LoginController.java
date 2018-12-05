@@ -27,7 +27,7 @@ public class LoginController {
 		
 		if(principal!=null) {
 			flash.addFlashAttribute("info","ya ha iniciado sesión anteriormente");
-			return "redirect:/home";
+			return "redirect:/animales";
 		}
 		if(error!=null) {
 			model.addAttribute("error", "error en el login: usuario o contraseña incorrecta.");
