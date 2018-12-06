@@ -1,20 +1,82 @@
 package com.webapp.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Produccion {
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+public class Produccion implements Serializable{
 	
-	private int cod_produccion;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@Column(name ="cod_produccion")
+	private int codProduccion;
 	
-	private Date fecha_ordeño;
+	@Column(name ="fecha_ordenio")
+	private Date fechaOrdeño;
 	
-	private float peso_produccion;
+	@Column(name ="peso_produccion")
+	private float pesoProduccion;
 	
+	@Column(name ="personal")
 	private String personal;
+		
+	@Column(name ="turno")
+	private String turno;
+
 	
-	private Animales animal;
 	
-	private String Turno;
+	public int getCodProduccion() {
+		return codProduccion;
+	}
+
+	public void setCodProduccion(int codProduccion) {
+		this.codProduccion = codProduccion;
+	}
+
+	public Date getFechaOrdeño() {
+		return fechaOrdeño;
+	}
+
+	public void setFechaOrdeño(Date fechaOrdeño) {
+		this.fechaOrdeño = fechaOrdeño;
+	}
+
+	public float getPesoProduccion() {
+		return pesoProduccion;
+	}
+
+	public void setPesoProduccion(float pesoProduccion) {
+		this.pesoProduccion = pesoProduccion;
+	}
+
+	public String getPersonal() {
+		return personal;
+	}
+
+	public void setPersonal(String personal) {
+		this.personal = personal;
+	}
+
+	public String getTurno() {
+		return turno;
+	}
+
+	public void setTurno(String turno) {
+		this.turno = turno;
+	}
+	
+	
 	
 	
 
