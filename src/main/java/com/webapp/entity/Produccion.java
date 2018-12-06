@@ -4,12 +4,17 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+
+@Entity
+@Table(name="produccion")
 public class Produccion implements Serializable{
 	
 	/**
@@ -33,9 +38,25 @@ public class Produccion implements Serializable{
 		
 	@Column(name ="turno")
 	private String turno;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Animal animal;
 
 	
 	
+	
+	public Produccion() {
+		
+	}
+
+	public Animal getAnimal() {
+		return animal;
+	}
+
+	public void setAnimal(Animal animal) {
+		this.animal = animal;
+	}
+
 	public int getCodProduccion() {
 		return codProduccion;
 	}

@@ -13,9 +13,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 
 
 @Entity
@@ -36,11 +38,8 @@ public class Animal  implements Serializable{
 	@Column(name ="sexo")
 	private String sexo;
 	
-	@Column(name ="cod_madre")
-	private int codMadre;
-	
-	@Column(name ="cod_padre")
-	private int codPadre;
+	/*@Column(name ="cod_madre")
+	private int codMadre;*/	
 	
 	@Column(name ="fecha_nacimiento")
 	private Date fechaNacimiento;
@@ -55,11 +54,11 @@ public class Animal  implements Serializable{
 	private String estado;
 	
 		
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "animales_cod_animal")
 	private List<Parto> partos;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "animales_cod_animal")
 	private List<Produccion> producciones;
 	
@@ -70,10 +69,10 @@ public class Animal  implements Serializable{
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "cod_animal")
 	private Animal madre;
-	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "cod_animal")
-	private Animal padre;
+			
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="padrillo_cod_padrillo")
+	private Padrillo padrillo;
 	
 	
 	public Animal() {
@@ -85,6 +84,16 @@ public class Animal  implements Serializable{
 	
 	
 	
+	
+	public Padrillo getPadrillo() {
+		return padrillo;
+	}
+
+	public void setPadrillo(Padrillo padrillo) {
+		this.padrillo = padrillo;
+	}
+
+
 	public List<Produccion> getProducciones() {
 		return producciones;
 	}
@@ -106,19 +115,6 @@ public class Animal  implements Serializable{
 	public void setMadre(Animal madre) {
 		this.madre = madre;
 	}
-
-
-
-	public Animal getPadre() {
-		return padre;
-	}
-
-
-
-	public void setPadre(Animal padre) {
-		this.padre = padre;
-	}
-
 
 
 	public void addParto(Parto parto) {
@@ -154,23 +150,7 @@ public class Animal  implements Serializable{
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
-
-	public int getCodMadre() {
-		return codMadre;
-	}
-
-	public void setCodMadre(int codMadre) {
-		this.codMadre = codMadre;
-	}
-
-	public int getCodPadre() {
-		return codPadre;
-	}
-
-	public void setCodPadre(int codPadre) {
-		this.codPadre = codPadre;
-	}
-
+	
 	public Date getFechaNacimiento() {
 		return fechaNacimiento;
 	}

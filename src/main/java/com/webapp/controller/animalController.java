@@ -7,18 +7,25 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 
 import com.webapp.entity.Usuario;
 import com.webapp.repository.UsuarioRepository;
+import com.webapp.service.AnimalService;
+import com.webapp.service.ClienteServiceImpl;
+import com.webapp.entity.Animal;
 import com.webapp.entity.Cliente;
 import com.webapp.paginator.PageRender;
 
@@ -29,9 +36,13 @@ public class AnimalController {
 	private static final Log LOG = LogFactory.getLog(AnimalController.class);
 	
 	
+	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
+	@Autowired
+	private AnimalService animalService;
+	
 	@RequestMapping(value= {"/home"})
 	public ModelAndView home(Authentication authentication) {	
 		Usuario usuario=usuarioRepository.findByUsername(authentication.getName());		
@@ -51,12 +62,19 @@ public class AnimalController {
 			LOG.info("Hola usuario autenticado, tu username es: ".concat(authentication.getName()));
 		}
 		
-		//PageRender<Cliente> pageRender = new PageRender<Cliente>("/listar", clientes);
+		Pageable pageRequest = PageRequest.of(page, 4);
+
+		Page<Animal> animales = animalService.findAll(pageRequest);
+		
+		PageRender<Animal> pageRender = new PageRender<Animal>("/animales", animales);
 		model.addAttribute("titulo", "Listado de animales");
-		//model.addAttribute("clientes", clientes);
-		//model.addAttribute("page", pageRender);
+		model.addAttribute("animales", animales);
+		model.addAttribute("page", pageRender);
 		//model.addAttribute("classActiveHome","active");
 		return "listar";
 	}
+	
+	
+	
 	
 }

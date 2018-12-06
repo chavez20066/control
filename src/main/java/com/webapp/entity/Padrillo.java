@@ -13,77 +13,72 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="evento")
-public class Evento implements Serializable {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+@Table(name="padrillo")
+public class Padrillo implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	@Column(name ="cod_evento")
-	private int evento;
+	@Column(name ="cod_padrillo")
+	private int codPadrillo;
+	
+	@Column(name ="nombre")
+	private String nombre;
 	
 	@Column(name ="descripcion")
 	private String descripcion;
 	
-	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "evento_cod_evento")
-	private List<Control> controles;
-
+	@JoinColumn(name = "padrillo_cod_padrillo")
+	private List<Animal> animales;
+	
 
 	
 	
-	public Evento() {
-		
-		controles=new ArrayList<Control>();
+	public Padrillo() {
+		animales=new ArrayList<Animal>();
 	}
 	
-	public void addControl(Control control) {
-		
-		controles.add(control);
+	public void addAnimal(Animal animal) {
+		animales.add(animal);
 	}
 
-
-	public int getEvento() {
-		return evento;
+	public int getCodPadrillo() {
+		return codPadrillo;
 	}
 
-
-	public void setEvento(int evento) {
-		this.evento = evento;
+	public void setCodPadrillo(int codPadrillo) {
+		this.codPadrillo = codPadrillo;
 	}
 
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
 	public String getDescripcion() {
 		return descripcion;
 	}
 
-
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
 
-
-	public List<Control> getControles() {
-		return controles;
+	public List<Animal> getAnimales() {
+		return animales;
 	}
 
-
-	public void setControles(List<Control> controles) {
-		this.controles = controles;
+	public void setAnimales(List<Animal> animales) {
+		this.animales = animales;
 	}
-	
-	
-	
-	
 	
 	
 
