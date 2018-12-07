@@ -14,4 +14,6 @@ public interface AnimalService {
 	
 	public Page<Animal> findAll(Pageable pageable);
 	
+	public List<Animal> finAllOrderByNombre();
+	
 }

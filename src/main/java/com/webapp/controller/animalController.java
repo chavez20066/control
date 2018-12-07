@@ -1,6 +1,8 @@
 package com.webapp.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,8 +27,10 @@ import com.webapp.entity.Usuario;
 import com.webapp.repository.UsuarioRepository;
 import com.webapp.service.AnimalService;
 import com.webapp.service.ClienteServiceImpl;
+import com.webapp.service.PadrilloService;
 import com.webapp.entity.Animal;
 import com.webapp.entity.Cliente;
+import com.webapp.entity.Padrillo;
 import com.webapp.paginator.PageRender;
 
 @Controller 
@@ -42,6 +46,9 @@ public class AnimalController {
 
 	@Autowired
 	private AnimalService animalService;
+	
+	@Autowired
+	private PadrilloService padrilloService;
 	
 	@RequestMapping(value= {"/home"})
 	public ModelAndView home(Authentication authentication) {	
@@ -66,12 +73,27 @@ public class AnimalController {
 
 		Page<Animal> animales = animalService.findAll(pageRequest);
 		
-		PageRender<Animal> pageRender = new PageRender<Animal>("/animales", animales);
+		PageRender<Animal> pageRender = new PageRender<Animal>("animales/listar", animales);
 		model.addAttribute("titulo", "Listado de animales");
 		model.addAttribute("animales", animales);
 		model.addAttribute("page", pageRender);
 		//model.addAttribute("classActiveHome","active");
-		return "listar";
+		return "animales/listar";
+	}
+	@Secured("ROLE_ADMIN")
+	@RequestMapping(value = "animales/form")
+	public String crear(Map<String, Object> model) {
+
+		List<Animal> animales=animalService.finAllOrderByNombre();
+		
+		List<Padrillo> padrillos=padrilloService.findPadrilloAllOrderByNombre();
+		
+		Animal animal = new Animal();
+		model.put("animal", animal);
+		model.put("animales", animales);
+		model.put("padrillos", padrillos);
+		model.put("titulo", "Registrar Animal");
+		return "animales/form";
 	}
 	
 	

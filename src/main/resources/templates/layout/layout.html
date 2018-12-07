@@ -55,7 +55,7 @@
 	
 	<div class="container"></div>
 
-	<footer th:fragment="footer" class="container">		
+	<footer th:fragment="footer" >		
 		<p sec:authorize="isAuthenticated()">
 		Usuario logeado: <span sec:authentication="name"></span></p>
 		<!-- Optional JavaScript -->

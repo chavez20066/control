@@ -18,8 +18,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-
-
 @Entity
 @Table(name="animales")
 public class Animal  implements Serializable{
@@ -67,7 +65,7 @@ public class Animal  implements Serializable{
 	private List<Control> controles;
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "cod_animal")
+	@JoinColumn(name = "cod_madre")
 	private Animal madre;
 			
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -81,9 +79,6 @@ public class Animal  implements Serializable{
 		producciones=new ArrayList<Produccion>();
 		controles=new ArrayList<Control>();
 	}
-	
-	
-	
 	
 	public Padrillo getPadrillo() {
 		return padrillo;

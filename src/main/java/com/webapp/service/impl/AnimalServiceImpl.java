@@ -28,6 +28,13 @@ public class AnimalServiceImpl implements AnimalService{
 		// TODO Auto-generated method stub
 		return animalRepository.findAll(pageable);
 	}
+
+	
+	@Override
+	public List<Animal> finAllOrderByNombre() {
+		// TODO Auto-generated method stub
+		return animalRepository.findAllOrderByNombre();
+	}
 	
 
 }
