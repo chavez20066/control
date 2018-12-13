@@ -15,7 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.webapp.repository.IUsuarioDao;
+import com.webapp.repository.UsuarioRepository;
 import com.webapp.entity.Role;
 import com.webapp.entity.Usuario;
 
@@ -23,7 +23,7 @@ import com.webapp.entity.Usuario;
 public class JpaUserDetailsService implements UserDetailsService{
 
 	@Autowired
-	private IUsuarioDao usuarioDao;
+	private UsuarioRepository usuarioRepository;
 	
 	private Logger logger = LoggerFactory.getLogger(JpaUserDetailsService.class);
 	
@@ -31,7 +31,7 @@ public class JpaUserDetailsService implements UserDetailsService{
 	@Transactional(readOnly=true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-        Usuario usuario = usuarioDao.findByUsername(username);
+        Usuario usuario = usuarioRepository.findByUsername(username);
         
         if(usuario == null) {
         	logger.error("Error en el Login: no existe el usuario '" + username + "' en el sistema!");

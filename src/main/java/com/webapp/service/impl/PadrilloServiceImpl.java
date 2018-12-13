@@ -21,4 +21,11 @@ public class PadrilloServiceImpl implements PadrilloService {
 		return padrilloRepository.findAllOrderByNombre();
 	}
 
+	@Override
+	public Padrillo findBycodPadrillo(int codPadrillo) {
+		// TODO Auto-generated method stub
+		return padrilloRepository.findByCodPadrillo(codPadrillo);
+	}
+
+	
 }

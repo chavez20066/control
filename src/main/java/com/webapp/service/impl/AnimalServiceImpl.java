@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.webapp.entity.Animal;
 import com.webapp.repository.AnimalRepository;
@@ -34,6 +35,14 @@ public class AnimalServiceImpl implements AnimalService{
 	public List<Animal> finAllOrderByNombre() {
 		// TODO Auto-generated method stub
 		return animalRepository.findAllOrderByNombre();
+	}
+
+	@Override
+	@Transactional
+	public void save(Animal animal) {
+		// TODO Auto-generated method stub
+		animalRepository.save(animal);
+		
 	}
 	
 

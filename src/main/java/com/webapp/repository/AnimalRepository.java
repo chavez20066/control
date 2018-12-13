@@ -7,7 +7,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.webapp.entity.Animal;
 
-public interface AnimalRepository extends PagingAndSortingRepository<Animal, Integer>{
+public interface AnimalRepository extends PagingAndSortingRepository<Animal, Long>{
 
 	@Query("select a from Animal a where a.sexo='HEMBRA' order by a.nombre")
 	public List<Animal> findAllOrderByNombre();

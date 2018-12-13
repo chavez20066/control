@@ -7,4 +7,6 @@ import com.webapp.entity.Padrillo;
 public interface PadrilloService {
 
 	public List<Padrillo> findPadrilloAllOrderByNombre();
+	
+	public Padrillo findBycodPadrillo(int codPadrillo);
 }

@@ -78,6 +78,13 @@ public class Padrillo implements Serializable{
 	public void setAnimales(List<Animal> animales) {
 		this.animales = animales;
 	}
+
+	@Override
+	public String toString() {
+		return "Padrillo [codPadrillo=" + codPadrillo + ", nombre=" + nombre + ", descripcion=" + descripcion
+				+ ", animales=" + animales.size() + "]";
+	}
+	
 	
 	
 

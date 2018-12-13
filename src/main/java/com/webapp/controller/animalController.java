@@ -1,10 +1,11 @@
 package com.webapp.controller;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -16,20 +17,23 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.webapp.entity.Usuario;
+import com.webapp.repository.PadrilloRepository;
 import com.webapp.repository.UsuarioRepository;
 import com.webapp.service.AnimalService;
-import com.webapp.service.ClienteServiceImpl;
+import com.webapp.service.IUploadFileService;
 import com.webapp.service.PadrilloService;
 import com.webapp.entity.Animal;
-import com.webapp.entity.Cliente;
 import com.webapp.entity.Padrillo;
 import com.webapp.paginator.PageRender;
 
@@ -50,6 +54,9 @@ public class AnimalController {
 	@Autowired
 	private PadrilloService padrilloService;
 	
+	@Autowired
+	private IUploadFileService uploadFileService;
+	
 	@RequestMapping(value= {"/home"})
 	public ModelAndView home(Authentication authentication) {	
 		Usuario usuario=usuarioRepository.findByUsername(authentication.getName());		
@@ -61,7 +68,7 @@ public class AnimalController {
 	}
 	
 	@Secured("ROLE_ADMIN")
-	@GetMapping("/animales")
+	@GetMapping("/animales/listar")
 	public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model,
 			Authentication authentication,
 			HttpServletRequest request) {
@@ -94,6 +101,53 @@ public class AnimalController {
 		model.put("padrillos", padrillos);
 		model.put("titulo", "Registrar Animal");
 		return "animales/form";
+	}
+	
+	@Secured("ROLE_ADMIN")
+	@RequestMapping(value = "animales/form", method = RequestMethod.POST)
+	public String guardar(@Valid Animal animal, BindingResult result, Model model,
+			@RequestParam("file") MultipartFile foto, RedirectAttributes flash, SessionStatus status) {
+
+		LOG.info("guardarAnimal(): "+ animal.toString());
+		LOG.info("padrillo(): "+ animal.getPadrillo().toString());
+		
+		//Padrillo padrillo=padrilloService.findBycodPadrillo(animal.getPadrillo())
+	
+		/*if (result.hasErrors()) {
+			model.addAttribute("titulo", "Formulario de Animales");
+			return "animales/form";
+		}*/
+
+		/*if (!foto.isEmpty()) {
+
+			if (animal.getClass() != null && animal.getCodAnimal() > 0 && animal.getFoto() != null
+					&& animal.getFoto().length() > 0) {
+
+				uploadFileService.delete(animal.getFoto());
+			}
+
+			String uniqueFilename = null;
+			try {
+				uniqueFilename = uploadFileService.copy(foto);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			flash.addFlashAttribute("info", "Has subido correctamente '" + uniqueFilename + "'");
+
+			animal.setFoto(uniqueFilename);
+
+		}*/
+
+		String mensajeFlash = (animal.getCodAnimal() != null) ? "Animal editado con éxito!" : "Animal creado con éxito!";
+
+		LOG.info("PRUEBA (): "+ animal.toString());
+		
+		animalService.save(animal);
+		status.setComplete();
+		flash.addFlashAttribute("success", mensajeFlash);
+		return "redirect:animales/listar";
 	}
 	
 	

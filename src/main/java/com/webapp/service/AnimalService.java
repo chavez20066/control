@@ -16,4 +16,6 @@ public interface AnimalService {
 	
 	public List<Animal> finAllOrderByNombre();
 	
+	public void save(Animal animal);
+	
 }

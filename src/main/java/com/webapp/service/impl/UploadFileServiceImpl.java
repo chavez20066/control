@@ -1,4 +1,4 @@
-package com.webapp.service;
+package com.webapp.service.impl;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +15,8 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.webapp.service.IUploadFileService;
 
 @Service
 public class UploadFileServiceImpl implements IUploadFileService {

@@ -17,6 +17,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="animales")
@@ -28,7 +32,7 @@ public class Animal  implements Serializable{
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	@Column(name ="cod_animal")
-	private int codAnimal;
+	private Long codAnimal;
 	
 	@Column(name ="nombre")
 	private String nombre;
@@ -39,6 +43,9 @@ public class Animal  implements Serializable{
 	/*@Column(name ="cod_madre")
 	private int codMadre;*/	
 	
+
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@Column(name ="fecha_nacimiento")
 	private Date fechaNacimiento;
 	
@@ -50,6 +57,10 @@ public class Animal  implements Serializable{
 	
 	@Column(name ="estado")
 	private String estado;
+	
+	@Column(name ="foto")
+	private String foto;
+	
 	
 		
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -80,6 +91,20 @@ public class Animal  implements Serializable{
 		controles=new ArrayList<Control>();
 	}
 	
+	
+	
+	public String getFoto() {
+		return foto;
+	}
+
+
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+
+
+
 	public Padrillo getPadrillo() {
 		return padrillo;
 	}
@@ -122,11 +147,11 @@ public class Animal  implements Serializable{
 		controles.add(control);		
 	}
 
-	public int getCodAnimal() {
+	public Long getCodAnimal() {
 		return codAnimal;
 	}
 
-	public void setCodAnimal(int codAnimal) {
+	public void setCodAnimal(Long codAnimal) {
 		this.codAnimal = codAnimal;
 	}
 
@@ -200,6 +225,16 @@ public class Animal  implements Serializable{
 
 	public void setControles(List<Control> controles) {
 		this.controles = controles;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "Animal [codAnimal=" + codAnimal + ", nombre=" + nombre + ", sexo=" + sexo + ", fechaNacimiento="
+				+ fechaNacimiento + ", raza=" + raza + ", metodoConcep=" + metodoConcep + ", estado=" + estado
+				+ ", foto=" + foto + ", partos=" + partos.size() + ", producciones=" + producciones.size() + ", controles="
+				+ controles.size() + ", madre=" + madre.nombre + ", padrillo=" + padrillo.getNombre() + "]";
 	}
 	
 	
