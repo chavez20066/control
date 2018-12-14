@@ -34,7 +34,7 @@ public class Animal  implements Serializable{
 	@Column(name ="cod_animal")
 	private Long codAnimal;
 	
-	@Column(name ="nombre")
+	@Column(name ="nombre", unique=true)
 	private String nombre;
 	
 	@Column(name ="sexo")
@@ -59,9 +59,7 @@ public class Animal  implements Serializable{
 	private String estado;
 	
 	@Column(name ="foto")
-	private String foto;
-	
-	
+	private String foto;	
 		
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "animales_cod_animal")
@@ -89,6 +87,7 @@ public class Animal  implements Serializable{
 		partos=new ArrayList<Parto>();
 		producciones=new ArrayList<Produccion>();
 		controles=new ArrayList<Control>();
+		//madre=new Animal();
 	}
 	
 	

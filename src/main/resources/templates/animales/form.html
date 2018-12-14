@@ -34,7 +34,7 @@
 					<div class="form-group row">
 						<label for="madre" class="col-sm-2 col-form-label">Madre</label>
 						<div class="col-sm-6">							
-								<select class="custom-select" th:field="*{madre.nombre}">								    
+								<select class="custom-select" th:field="*{madre.codAnimal}">								    
 								    <option th:each="m: ${animales}"
 									th:value="${m.codAnimal}"
 									th:text="${m.nombre}"></option>
@@ -45,11 +45,11 @@
 					<div class="form-group row">
 						<label for="padre" class="col-sm-2 col-form-label">Padrillo</label>
 						<div class="col-sm-6">							
-								<select class="custom-select" th:field="*{padrillo.nombre}">								    
-								    <option th:each="p: ${padrillos}"
-									th:value="${p.codPadrillo}"
-									th:text="${p.nombre}"></option>
-								</select>
+							<select class="custom-select" th:field="*{padrillo.codPadrillo}">								    
+							    <option th:each="p: ${padrillos}"
+								th:value="${p.codPadrillo}"
+								th:text="${p.nombre}"></option>
+							</select>
 						</div>
 					</div>
 					

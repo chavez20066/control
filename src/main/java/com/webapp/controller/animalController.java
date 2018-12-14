@@ -80,7 +80,7 @@ public class AnimalController {
 
 		Page<Animal> animales = animalService.findAll(pageRequest);
 		
-		PageRender<Animal> pageRender = new PageRender<Animal>("animales/listar", animales);
+		PageRender<Animal> pageRender = new PageRender<Animal>("listar", animales);  //ruta del paginador
 		model.addAttribute("titulo", "Listado de animales");
 		model.addAttribute("animales", animales);
 		model.addAttribute("page", pageRender);
@@ -109,16 +109,21 @@ public class AnimalController {
 			@RequestParam("file") MultipartFile foto, RedirectAttributes flash, SessionStatus status) {
 
 		LOG.info("guardarAnimal(): "+ animal.toString());
-		LOG.info("padrillo(): "+ animal.getPadrillo().toString());
+		LOG.info("padrillo(): "+ animal.getPadrillo());
 		
-		//Padrillo padrillo=padrilloService.findBycodPadrillo(animal.getPadrillo())
+		Padrillo padrillo=padrilloService.findBycodPadrillo(animal.getPadrillo().getCodPadrillo());
+		Animal madre=animalService.findByCodAnimal(animal.getMadre().getCodAnimal());
+		
+		animal.setPadrillo(padrillo);
+		animal.setMadre(madre);
 	
-		/*if (result.hasErrors()) {
+		if (result.hasErrors()) {
 			model.addAttribute("titulo", "Formulario de Animales");
 			return "animales/form";
-		}*/
+		}
 
-		/*if (!foto.isEmpty()) {
+		LOG.info("foto (): "+ foto.isEmpty()); 
+		if (!foto.isEmpty()) {
 
 			if (animal.getClass() != null && animal.getCodAnimal() > 0 && animal.getFoto() != null
 					&& animal.getFoto().length() > 0) {
@@ -138,7 +143,7 @@ public class AnimalController {
 
 			animal.setFoto(uniqueFilename);
 
-		}*/
+		}
 
 		String mensajeFlash = (animal.getCodAnimal() != null) ? "Animal editado con éxito!" : "Animal creado con éxito!";
 
@@ -147,7 +152,7 @@ public class AnimalController {
 		animalService.save(animal);
 		status.setComplete();
 		flash.addFlashAttribute("success", mensajeFlash);
-		return "redirect:animales/listar";
+		return "redirect:listar";
 	}
 	
 	

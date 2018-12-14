@@ -44,6 +44,12 @@ public class AnimalServiceImpl implements AnimalService{
 		animalRepository.save(animal);
 		
 	}
+
+	@Override
+	public Animal findByCodAnimal(Long codAnimal) {
+		// TODO Auto-generated method stub
+		return animalRepository.findByCodAnimal(codAnimal);
+	}
 	
 
 }

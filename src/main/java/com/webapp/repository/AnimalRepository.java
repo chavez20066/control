@@ -11,4 +11,6 @@ public interface AnimalRepository extends PagingAndSortingRepository<Animal, Lon
 
 	@Query("select a from Animal a where a.sexo='HEMBRA' order by a.nombre")
 	public List<Animal> findAllOrderByNombre();
+	
+	public Animal findByCodAnimal(Long codAnimal);
 }

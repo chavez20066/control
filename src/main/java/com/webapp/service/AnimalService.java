@@ -18,4 +18,6 @@ public interface AnimalService {
 	
 	public void save(Animal animal);
 	
+	public Animal findByCodAnimal(Long codAnimal);
+	
 }

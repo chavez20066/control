@@ -15,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="padrillo")
 public class Padrillo implements Serializable{
@@ -32,6 +34,7 @@ public class Padrillo implements Serializable{
 	@Column(name ="descripcion")
 	private String descripcion;
 	
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "padrillo_cod_padrillo")
 	private List<Animal> animales;
