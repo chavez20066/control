@@ -37,7 +37,7 @@
 					<tbody>
 						<tr th:each="animal: ${animales}">
 							<td sec:authorize="hasRole('ROLE_USER')"><a class="btn btn-primary btn-xs" 
-							th:href="@{/ver/} + ${animal.codAnimal}" th:text="${animal.codAnimal}"></a></td>
+							th:href="@{/animales/ver/} + ${animal.codAnimal}" th:text="${animal.codAnimal}"></a></td>
 							<td th:text="${animal.nombre}"></td>
 							<td th:text="${animal.sexo}"></td>
 							<td th:text="${animal.madre.nombre}"></td>
