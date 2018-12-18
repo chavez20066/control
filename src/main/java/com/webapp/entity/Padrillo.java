@@ -34,8 +34,8 @@ public class Padrillo implements Serializable{
 	@Column(name ="descripcion")
 	private String descripcion;
 	
-	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	//@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "padrillo_cod_padrillo")
 	private List<Animal> animales;
 	

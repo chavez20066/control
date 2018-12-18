@@ -13,4 +13,7 @@ public interface AnimalRepository extends PagingAndSortingRepository<Animal, Lon
 	public List<Animal> findAllOrderByNombre();
 	
 	public Animal findByCodAnimal(Long codAnimal);
+	
+	@Query("delete from Animal a where a.codAnimal=?1")	
+	public void delete(Long CodAnimal);
 }

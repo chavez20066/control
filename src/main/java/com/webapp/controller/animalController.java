@@ -1,14 +1,10 @@
 package com.webapp.controller;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +27,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -47,6 +44,7 @@ import com.webapp.entity.Padrillo;
 import com.webapp.paginator.PageRender;
 
 @Controller
+@SessionAttributes("animal")
 public class AnimalController {
 
 	// protected final Log logger = LogFactory.getLog(this.getClass());
@@ -119,11 +117,11 @@ public class AnimalController {
 		model.addAttribute("animales", animales);
 		model.addAttribute("page", pageRender);
 		// model.addAttribute("classActiveHome","active");
-		return "animales/listar";
+		return "/animales/listar";
 	}
 
 	@Secured("ROLE_ADMIN")
-	@RequestMapping(value = "animales/form")
+	@RequestMapping(value = "/animales/form")
 	public String crear(Map<String, Object> model) {
 
 		List<Animal> animales = animalService.finAllOrderByNombre();
@@ -135,26 +133,32 @@ public class AnimalController {
 		model.put("animales", animales);
 		model.put("padrillos", padrillos);
 		model.put("titulo", "Registrar Animal");
-		return "animales/form";
+		return "/animales/form";
 	}
 
 	@Secured("ROLE_ADMIN")
-	@RequestMapping(value = "animales/form", method = RequestMethod.POST)
+	@RequestMapping(value = "/animales/form", method = RequestMethod.POST)
 	public String guardar(@Valid Animal animal, BindingResult result, Model model,
 			@RequestParam("file") MultipartFile foto, RedirectAttributes flash, SessionStatus status) {
 
 		LOG.info("guardarAnimal(): " + animal.toString());
-		LOG.info("padrillo(): " + animal.getPadrillo());
-
+		//LOG.info("padrillo(): " + animal.getPadrillo());
+		
+				
 		Padrillo padrillo = padrilloService.findBycodPadrillo(animal.getPadrillo().getCodPadrillo());
 		Animal madre = animalService.findByCodAnimal(animal.getMadre().getCodAnimal());
 
+		LOG.info("EDITAR() madre: " + madre.toString());
+		
+		LOG.info("EDITAR() padrillo: " + padrillo.toString()); 
+		
+		
 		animal.setPadrillo(padrillo);
 		animal.setMadre(madre);
 
 		if (result.hasErrors()) {
 			model.addAttribute("titulo", "Formulario de Animales");
-			return "animales/form";
+			return "/animales/form";
 		}
 
 		LOG.info("foto (): " + foto.isEmpty());
@@ -180,8 +184,7 @@ public class AnimalController {
 
 		}
 
-		String mensajeFlash = (animal.getCodAnimal() != null) ? "Animal editado con éxito!"
-				: "Animal creado con éxito!";
+		String mensajeFlash = (animal.getCodAnimal() != null) ? "Animal editado con éxito!"	: "Animal creado con éxito!";
 
 		LOG.info("PRUEBA (): " + animal.toString());
 
@@ -189,6 +192,65 @@ public class AnimalController {
 		status.setComplete();
 		flash.addFlashAttribute("success", mensajeFlash);
 		return "redirect:listar";
+	}
+	
+	@RequestMapping(value = "/animales/form/{codAnimal}")
+	public String editar(@PathVariable(value = "codAnimal") Long codAnimal, Map<String, Object> model, RedirectAttributes flash) {
+
+		Animal animal = null;
+
+		if (codAnimal > 0) {
+			animal = animalService.findByCodAnimal(codAnimal);			
+			
+			if (animal == null) {
+				flash.addFlashAttribute("error", "El código del animal no existe en la BBDD!");
+				return "redirect:/animales/listar";
+			}
+			else {
+				LOG.info("EDITAR() codMadre: " + animal.getMadre().getCodAnimal());
+				Padrillo padrillo = padrilloService.findBycodPadrillo(animal.getPadrillo().getCodPadrillo());
+				Animal madre = animalService.findByCodAnimal(animal.getMadre().getCodAnimal());
+				
+				LOG.info("EDITAR() madre: " + madre.toString());
+
+				animal.setPadrillo(padrillo);
+				animal.setMadre(madre);
+			}
+		} else {
+			flash.addFlashAttribute("error", "El código del cliente no puede ser cero!");
+			return "redirect:/animales/listar";
+		}
+		
+		List<Animal> animales = animalService.finAllOrderByNombre();
+
+		List<Padrillo> padrillos = padrilloService.findPadrilloAllOrderByNombre();
+		
+		
+		
+		LOG.info("EDITAR (): " + animal.toString());
+		
+		model.put("animal", animal);
+		model.put("animales", animales);
+		model.put("padrillos", padrillos);
+		model.put("titulo", "Editar Animal");
+		return "/animales/form";
+	}
+	
+	@RequestMapping(value = "/animales/eliminar/{codAnimal}")
+	public String eliminar(@PathVariable(value = "codAnimal") Long codAnimal, RedirectAttributes flash) {
+
+		if (codAnimal> 0) {
+			Animal animal =  animalService.findByCodAnimal(codAnimal);
+
+			animalService.delete(codAnimal);
+			flash.addFlashAttribute("success", "Animal eliminado con éxito!");
+
+			if (uploadFileService.delete(animal.getFoto())) {
+				flash.addFlashAttribute("info", "Foto " + animal.getFoto() + " eliminada con exito!");
+			}
+
+		}
+		return "redirect:/animales/listar";
 	}
 
 }

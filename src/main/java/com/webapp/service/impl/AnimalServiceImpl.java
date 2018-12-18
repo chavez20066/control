@@ -50,6 +50,14 @@ public class AnimalServiceImpl implements AnimalService{
 		// TODO Auto-generated method stub
 		return animalRepository.findByCodAnimal(codAnimal);
 	}
+
+	@Override
+	public void delete(Long codAnimal) {
+		// TODO Auto-generated method stub
+		//animalRepository.delete(codAnimal);
+		animalRepository.deleteById(codAnimal);
+		
+	}
 	
 
 }

@@ -50,9 +50,9 @@
 								th:href="@{'/control/form/' + ${animal.codAnimal}}"
 								th:text="'Registrar Control'"></a></td>
 							<td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-primary btn-xs"
-								th:href="@{/form/} + ${animal.codAnimal}" th:text="'editar'"></a></td>
+								th:href="@{/animales/form/} + ${animal.codAnimal}" th:text="'editar'"></a></td>
 							<td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-danger btn-xs"
-								th:href="@{/eliminar/} + ${animal.codAnimal}" th:text="'eliminar'"
+								th:href="@{/animales/eliminar/} + ${animal.codAnimal}" th:text="'eliminar'"
 								onclick="return confirm('Estas seguro que quieres eliminar?');"></a></td>
 						</tr>
 					</tbody>

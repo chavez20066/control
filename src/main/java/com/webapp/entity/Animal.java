@@ -73,7 +73,7 @@ public class Animal  implements Serializable{
 	@JoinColumn(name = "animales_cod_animal")
 	private List<Control> controles;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cod_madre")
 	private Animal madre;
 			

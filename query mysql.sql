@@ -35,5 +35,7 @@ where animal0_.cod_animal=?
 select animal0_.cod_animal as cod_anim1_0_, animal0_.estado as estado2_0_, animal0_.fecha_nacimiento as fecha_na3_0_, animal0_.foto as foto4_0_, animal0_.cod_madre as cod_madr9_0_, animal0_.metodo_concep as metodo_c5_0_, animal0_.nombre as nombre6_0_, animal0_.padrillo_cod_padrillo as padrill10_0_, animal0_.raza as raza7_0_, animal0_.sexo as sexo8_0_ 
 from animales animal0_ where animal0_.cod_animal=1
 
+SELECT DATEDIFF('2017-1-15', '2016-12-31');
+
 
 

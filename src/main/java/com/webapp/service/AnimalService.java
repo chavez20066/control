@@ -20,4 +20,6 @@ public interface AnimalService {
 	
 	public Animal findByCodAnimal(Long codAnimal);
 	
+	public void delete(Long codAnimal);
+	
 }

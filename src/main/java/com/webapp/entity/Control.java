@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -37,6 +38,7 @@ public class Control implements Serializable {
 	private String observacion;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "animales_cod_animal")
 	private Animal animal;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
