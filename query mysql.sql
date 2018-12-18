@@ -27,6 +27,8 @@ select * from authorities
 
 select * from animales
 
+delete from animales where cod_animal=44
+
 
 select animal0_.cod_animal as cod_anim1_0_0_, animal0_.estado as estado2_0_0_, animal0_.fecha_nacimiento as fecha_na3_0_0_, animal0_.foto as foto4_0_0_, animal0_.cod_madre as cod_madr9_0_0_, animal0_.metodo_concep as metodo_c5_0_0_, animal0_.nombre as nombre6_0_0_, animal0_.padrillo_cod_padrillo as padrill10_0_0_, animal0_.raza as raza7_0_0_, animal0_.sexo as sexo8_0_0_ from animales animal0_ 
 where animal0_.cod_animal=?
@@ -36,6 +38,8 @@ select animal0_.cod_animal as cod_anim1_0_, animal0_.estado as estado2_0_, anima
 from animales animal0_ where animal0_.cod_animal=1
 
 SELECT DATEDIFF('2017-1-15', '2016-12-31');
+
+select * from control
 
 
 
