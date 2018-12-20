@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,8 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Table(name="padrillo")
 public class Padrillo implements Serializable{
@@ -26,7 +23,7 @@ public class Padrillo implements Serializable{
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	@Column(name ="cod_padrillo")
-	private int codPadrillo;
+	private Long codPadrillo;
 	
 	@Column(name ="nombre")
 	private String nombre;
@@ -50,11 +47,11 @@ public class Padrillo implements Serializable{
 		animales.add(animal);
 	}
 
-	public int getCodPadrillo() {
+	public Long getCodPadrillo() {
 		return codPadrillo;
 	}
 
-	public void setCodPadrillo(int codPadrillo) {
+	public void setCodPadrillo(Long codPadrillo) {
 		this.codPadrillo = codPadrillo;
 	}
 

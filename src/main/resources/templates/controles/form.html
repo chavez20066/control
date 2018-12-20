@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8" />
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container py-4">
+
+		<div class="card">
+			<div class="card-header bg-primary text-white" th:text="${titulo}"></div>
+			<div class="card-body">
+
+				<div th:object="${animal}" th:remove="tag">
+					<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
+						role="alert">
+						<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+					</ul>
+				</div>
+
+				<form th:action="@{/animales/form}" th:object="${animal}" method="post"
+					enctype="multipart/form-data">
+					<div class="form-group row">
+						<label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{nombre}" class="form-control"
+								th:errorclass="'form-control alert-danger'" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label for="madre" class="col-sm-2 col-form-label">Madre</label>
+						<div class="col-sm-6">							
+								<select class="custom-select" th:field="*{madre.codAnimal}">								    
+								    <option th:each="m: ${animales}"
+									th:value="${m.codAnimal}"
+									th:text="${m.nombre}"></option>
+								</select>
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label for="padre" class="col-sm-2 col-form-label">Padrillo</label>
+						<div class="col-sm-6">							
+							<select class="custom-select" th:field="*{padrillo.codPadrillo}">								    
+							    <option th:each="p: ${padrillos}"
+								th:value="${p.codPadrillo}"
+								th:text="${p.nombre}"></option>
+							</select>
+						</div>
+					</div>
+					
+					
+					<div class="form-group row">
+						<label for="sexo" class="col-sm-2 col-form-label">sexo</label>
+						<div class="col-sm-6">
+							<!-- <input type="text" th:field="*{sexo}" class="form-control"
+								th:errorclass="'form-control alert-danger'" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('sexo')}" th:errors="*{sexo}"></small>-->
+								<select class="custom-select" th:field="*{sexo}">								    
+								    <option th:value="'HEMBRA'" th:text="'HEMBRA'"></option>
+								    <option th:value="'MACHO'" th:text="'MACHO'"></option>
+								</select>
+						</div>
+					</div>
+					
+					
+					<div class="form-group row">
+						<label for="fechaNacimiento" class="col-sm-2 col-form-label">Fecha Nacimiento</label>
+						<div class="col-sm-6">
+							<input type="date" th:field="*{fechaNacimiento}" class="form-control"
+								th:errorclass="'form-control alert-danger'" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('fechaNacimiento')}" th:errors="*{fechaNacimiento}"></small>
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label for="raza" class="col-sm-2 col-form-label">Raza</label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control" th:field="*{raza}"
+								th:errorclass="'form-control alert-danger'" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('raza')}" th:errors="*{raza}"></small>
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label for="metodoConcep" class="col-sm-2 col-form-label">Metodo Concepción</label>
+						<div class="col-sm-6">
+							<select class="custom-select" th:field="*{metodoConcep}">								    
+								    <option th:value="'INSEMINACIÓN'" th:text="'INSEMINACIÓN'"></option>
+								    <option th:value="'MONTA'" th:text="'MONTA'"></option>
+								</select>
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label for="estado" class="col-sm-2 col-form-label">Estado</label>
+						<div class="col-sm-6">
+							<select class="custom-select" th:field="*{estado}">								    
+								    <option th:value="'ACTIVO'" th:text="'ACTIVO'"></option>
+								    <option th:value="'INACTIVO'" th:text="'INACTIVO'"></option>
+							</select>
+						</div>
+					</div>
+
+
+					<div class="form-group row">
+						<label for="file" class="col-sm-2 col-form-label">Foto</label>
+						<div class="col-sm-6">
+							<input type="file" name="file" class="form-control" />
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="col-sm-6">
+							<input type="submit" th:value="${titulo}"
+								class="btn btn-primary" />
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

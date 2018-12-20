@@ -24,8 +24,14 @@
 			<div class="collapse navbar-collapse">
 				<ul class="navbar-nav mr-auto" id="idNavbar">
 					<li class="nav-item" th:class="${classActiveHome}"><a class="nav-link" th:href="@{/home}">Inicio</a></li>
-					<li class="nav-item" th:class="${classActiveAsignaturas}"  ><a class="nav-link" 						
-						th:href="@{/animales/listar}">Animales</a></li>					
+					<li class="nav-item" th:class="${classActiveAnimales}"  ><a class="nav-link" 						
+						th:href="@{/animales/listar}">Animales</a></li>		
+					<li class="nav-item" th:class="${classActivePadrillos}"  ><a class="nav-link" 						
+						th:href="@{/padrillos/listar}">Padrillos</a></li>	
+					<li class="nav-item" th:class="${classActiveEventos}"  ><a class="nav-link" 						
+						th:href="@{/eventos/listar}">Eventos</a></li>		
+					<li class="nav-item" th:class="${classActiveControles}"  ><a class="nav-link" 						
+						th:href="@{/controles/listar}">Controles</a></li>			
 					
 				</ul>
 				<ul class="navbar-nav navbar-right">

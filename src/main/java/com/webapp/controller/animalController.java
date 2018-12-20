@@ -34,7 +34,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.webapp.entity.Usuario;
-import com.webapp.repository.PadrilloRepository;
 import com.webapp.repository.UsuarioRepository;
 import com.webapp.service.AnimalService;
 import com.webapp.service.IUploadFileService;
@@ -116,7 +115,7 @@ public class AnimalController {
 		model.addAttribute("titulo", "Listado de animales");
 		model.addAttribute("animales", animales);
 		model.addAttribute("page", pageRender);
-		// model.addAttribute("classActiveHome","active");
+		model.addAttribute("classActiveAnimales","active");
 		return "/animales/listar";
 	}
 

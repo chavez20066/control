@@ -26,7 +26,7 @@ public class Produccion implements Serializable{
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	@Column(name ="cod_produccion")
-	private int codProduccion;
+	private Long codProduccion;
 	
 	@Column(name ="fecha_ordenio")
 	private Date fechaOrdeño;
@@ -59,11 +59,11 @@ public class Produccion implements Serializable{
 		this.animal = animal;
 	}
 
-	public int getCodProduccion() {
+	public Long getCodProduccion() {
 		return codProduccion;
 	}
 
-	public void setCodProduccion(int codProduccion) {
+	public void setCodProduccion(Long codProduccion) {
 		this.codProduccion = codProduccion;
 	}
 

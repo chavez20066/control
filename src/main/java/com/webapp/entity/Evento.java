@@ -28,7 +28,7 @@ public class Evento implements Serializable {
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	@Column(name ="cod_evento")
-	private int evento;
+	private Long codEvento;
 	
 	@Column(name ="descripcion")
 	private String descripcion;
@@ -51,17 +51,14 @@ public class Evento implements Serializable {
 		controles.add(control);
 	}
 
-
-	public int getEvento() {
-		return evento;
+	public Long getCodEvento() {
+		return codEvento;
 	}
 
-
-	public void setEvento(int evento) {
-		this.evento = evento;
+	public void setCodEvento(Long codEvento) {
+		this.codEvento = codEvento;
 	}
-
-
+	
 	public String getDescripcion() {
 		return descripcion;
 	}
@@ -79,6 +76,11 @@ public class Evento implements Serializable {
 
 	public void setControles(List<Control> controles) {
 		this.controles = controles;
+	}
+
+	@Override
+	public String toString() {
+		return "Evento [codEvento=" + codEvento + ", descripcion=" + descripcion + ", controles=" + controles.size() + "]";
 	}
 	
 	

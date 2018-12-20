@@ -15,5 +15,6 @@ public interface PadrilloRepository extends JpaRepository<Padrillo, Serializable
 	@Query("select p from Padrillo p order by p.nombre")
 	public List<Padrillo> findAllOrderByNombre();
 	
-	public Padrillo findByCodPadrillo(int codPadrillo);
+	public Padrillo findByCodPadrillo(Long codPadrillo);
+	
 }

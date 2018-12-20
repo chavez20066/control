@@ -26,7 +26,7 @@ public class Control implements Serializable {
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	@Column(name ="cod_control")
-	private int codControl;
+	private Long codControl;
 	
 	@Column(name ="fecha_control")
 	private Date fechaControl;
@@ -47,11 +47,11 @@ public class Control implements Serializable {
 	
 		
 
-	public int getCodControl() {
+	public Long getCodControl() {
 		return codControl;
 	}
 
-	public void setCodControl(int codControl) {
+	public void setCodControl(Long codControl) {
 		this.codControl = codControl;
 	}
 
