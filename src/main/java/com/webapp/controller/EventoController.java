@@ -84,7 +84,8 @@ public class EventoController {
 		
 		model.put("evento", evento);
 		model.put("titulo", "Detalle del Evento: " + evento.getDescripcion());
-		return "/padrillos/ver";
+		model.put("classActiveEventos","active");
+		return "/eventos/ver";
 	}
 	
 	@Secured("ROLE_ADMIN")

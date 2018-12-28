@@ -14,8 +14,14 @@
 
 				<h4 class="card-title">
 					<a class="btn btn-primary btn-xs"
-						th:href="@{'/control/form/' + ${animal.codAnimal}}"
-						th:text="'Crear control'"></a>
+						th:href="@{'/controles/form/' + ${animal.codAnimal}}"
+						th:text="'Registrar control'"></a>
+					<a class="btn btn-success btn-xs"
+						th:href="@{'/partos/form/' + ${animal.codAnimal}}"
+						th:text="'Registrar Parto'"></a>
+					<a class="btn btn-danger btn-xs"
+						th:href="@{'/producciones/form/' + ${animal.codAnimal}}"
+						th:text="'Registrar Producción'"></a>
 				</h4>
 				<!--  th:if="${#lists.isEmpty(cliente.facturas)} -->
 				
@@ -25,7 +31,7 @@
 					th:src="@{'/uploads/' + ${animal.foto}}" th:alt="${animal.foto}" />
 
 				<ul class="list-group">
-					<li class="list-group-item active" th:text="${animal.nombre}"></li>
+					<li class="list-group-item active" th:text="${animal.codAnimal}+'-'+${animal.nombre}"></li>
 					<li class="list-group-item">						
 						<div class="form-group row">
 						<label class="col-sm-2 col-form-label"><strong>Sexo</strong></label>

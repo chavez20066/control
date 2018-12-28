@@ -58,6 +58,12 @@ public class AnimalServiceImpl implements AnimalService{
 		animalRepository.deleteById(codAnimal);
 		
 	}
+
+	@Override
+	public List<Animal> findByNombreAndCodAnimal(String term) {
+		// TODO Auto-generated method stub
+		return animalRepository.findByNombreAndCodAnimal(term);
+	}
 	
 
 }

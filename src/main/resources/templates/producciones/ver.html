@@ -11,44 +11,37 @@
 		<div class="card bg-light">
 			<div class="card-header" th:text="${titulo}"></div>
 			<div class="card-body">
-
-				
+			
 				<ul class="list-group">
-					<li class="list-group-item active" th:text="${control.animal.codAnimal} + '-' + ${control.animal.nombre}"></li>
+					<li class="list-group-item active" th:text="${produccion.animal.codAnimal} + '-' + ${produccion.animal.nombre}"></li>
 					<li class="list-group-item">						
 						<div class="form-group row">
-						<label class="col-sm-2 col-form-label"><strong>Evento</strong></label>
+						<label class="col-sm-2 col-form-label"><strong>Peso Producción Kg</strong></label>
 							<div class="col-sm-6">
-								<input type="text" disabled th:field="*{control.evento.descripcion}" class="form-control"/>
+								<input type="text" disabled th:field="*{produccion.pesoProduccion}" class="form-control"/>
 							</div>
 						</div>						
 					</li>
+					
 					<li class="list-group-item">
 						<div class="form-group row">
 						<label class="col-sm-2 col-form-label"><strong>Fecha</strong></label>
 							<div class="col-sm-6">
-								<input type="text" disabled th:field="*{control.fechaControl}" class="form-control"/>
+								<input type="text" disabled th:field="*{produccion.fechaOrdenio}" class="form-control"/>
 							</div>
 						</div>	
 					</li>
 					<li class="list-group-item">
 						<div class="form-group row">
-						<label class="col-sm-2 col-form-label"><strong>Peso Animal</strong></label>
+						<label class="col-sm-2 col-form-label"><strong>Turno</strong></label>
 							<div class="col-sm-6">
-								<input type="text" disabled th:field="*{control.peso}" class="form-control"/>
+								<input type="text" disabled th:field="*{produccion.turno}" class="form-control"/>
 							</div>
 						</div>	
 					</li>
-					<li class="list-group-item">
-						<div class="form-group row">
-						<label class="col-sm-2 col-form-label"><strong>Observación</strong></label>
-							<div class="col-sm-6">
-								<input type="text" disabled th:field="*{control.observacion}" class="form-control"/>
-							</div>
-						</div>	
-					</li>
-						
+										
 				</ul>
+
 
 			</div>
 		</div>

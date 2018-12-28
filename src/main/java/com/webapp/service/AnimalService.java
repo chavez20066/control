@@ -12,6 +12,8 @@ public interface AnimalService {
 
 	public List<Animal> findAll();
 	
+	public List<Animal> findByNombreAndCodAnimal(String term);
+	
 	public Page<Animal> findAll(Pageable pageable);
 	
 	public List<Animal> finAllOrderByNombre();
@@ -21,5 +23,7 @@ public interface AnimalService {
 	public Animal findByCodAnimal(Long codAnimal);
 	
 	public void delete(Long codAnimal);
+	
+	
 	
 }

@@ -12,14 +12,14 @@
 			<div class="card-header bg-primary text-white" th:text="${titulo}"></div>
 			<div class="card-body">
 
-				<div th:object="${control}" th:remove="tag">
+				<div th:object="${parto}" th:remove="tag">
 					<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
 						role="alert">
 						<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
 					</ul>
 				</div>
 
-				<form th:action="@{/controles/form}" th:object="${control}" method="post">					
+				<form th:action="@{/partos/form}" th:object="${parto}" method="post">					
 					<div class="form-group row">
 						<label for="animal" class="col-sm-2 col-form-label">Animal</label>
 						<div class="col-sm-6">							
@@ -30,48 +30,37 @@
 								</select>
 						</div>
 					</div>
-					
+						
 					<div class="form-group row">
-						<label for="evento" class="col-sm-2 col-form-label">Evento</label>
-						<div class="col-sm-6">							
-								<select class="custom-select" th:field="*{evento.codEvento}">								    
-								    <option th:each="e: ${eventos}"
-									th:value="${e.codEvento}"
-									th:text="${e.descripcion}"></option>
-								</select>
-						</div>
-					</div>
-					
-					<div class="form-group row">
-						<label for="fechaControl" class="col-sm-2 col-form-label">Fecha</label>
+						<label for="fechaParto" class="col-sm-2 col-form-label">Fecha Parto</label>
 						<div class="col-sm-6">
-							<input type="date" th:field="*{fechaControl}" class="form-control"
+							<input type="date" class="form-control" th:field="*{fechaParto}"
 								th:errorclass="'form-control alert-danger'" /> <small
 								class="form-text text-danger"
-								th:if="${#fields.hasErrors('fechaControl')}" th:errors="*{fechaControl}"></small>
+								th:if="${#fields.hasErrors('fechaParto')}" th:errors="*{fechaParto}"></small>
 						</div>
 					</div>
 					
 					<div class="form-group row">
-						<label for="peso" class="col-sm-2 col-form-label">Peso KG</label>
+						<label for="nroCrias" class="col-sm-2 col-form-label">Numero de Crias</label>
 						<div class="col-sm-6">
-							<input type="text" class="form-control" th:field="*{peso}" th:value="0"
+							<input type="number" class="form-control" th:field="*{nroCrias}" 
 								th:errorclass="'form-control alert-danger'" /> <small
 								class="form-text text-danger"
-								th:if="${#fields.hasErrors('peso')}" th:errors="*{peso}"></small>
+								th:if="${#fields.hasErrors('nroCrias')}" th:errors="*{nroCrias}"></small>
 						</div>
 					</div>
-					
+														
 					<div class="form-group row">
-						<label for="observacion" class="col-sm-2 col-form-label">Observación</label>
+						<label for="fechaProximoCelo" class="col-sm-2 col-form-label">Fecha Proximo Celo</label>
 						<div class="col-sm-6">
-							<input type="text" class="form-control" th:field="*{observacion}"
+							<input type="date" th:field="*{fechaProximoCelo}" class="form-control"
 								th:errorclass="'form-control alert-danger'" /> <small
 								class="form-text text-danger"
-								th:if="${#fields.hasErrors('observacion')}" th:errors="*{observacion}"></small>
+								th:if="${#fields.hasErrors('fechaProximoCelo')}" th:errors="*{fechaProximoCelo}"></small>
 						</div>
 					</div>
-					
+																							
 					
 					<div class="form-group row">
 						<div class="col-sm-6">

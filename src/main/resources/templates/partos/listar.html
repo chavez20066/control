@@ -15,34 +15,30 @@
 			<div class="card-body">
 
 				  <h4 class="card-title">
-					<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/controles/form}" class="btn btn-primary btn-xs">Registrar Control</a>
+					<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/partos/form}" class="btn btn-primary btn-xs">Registrar Parto</a>
 				</h4>
 				<table class="table table-striped table-bordered">
 					<thead class="thead-inverse">
 						<tr>
 							<th sec:authorize="hasRole('ROLE_USER')">Código</th>
-							<th>Animal</th>
-							<th>Evento</th>
-							<th>Fecha</th>
-							<th>Peso</th>
-							<th>Observación</th>
+							<th>Fecha parto</th>
+							<th>Numero crías</th>
+							<th>Fecha proximo celo</th>							
 							<th sec:authorize="hasRole('ROLE_ADMIN')">editar</th>
 							<th sec:authorize="hasRole('ROLE_ADMIN')">eliminar</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="control: ${controles}">
+						<tr th:each="parto: ${partos}">
 							<td sec:authorize="hasRole('ROLE_USER')"><a class="btn btn-primary btn-xs" 
-							th:href="@{/controles/ver/} + ${control.codControl}" th:text="${control.codControl}"></a></td>
-							<td th:text="${control.animal.nombre}"></td>
-							<td th:text="${control.evento.descripcion}"></td>
-							<td th:text="${control.fechaControl}"></td>
-							<td th:text="${control.peso}"></td>  
-							<td th:text="${control.observacion}"></td>							
+							th:href="@{/partos/ver/} + ${parto.codParto}" th:text="${parto.codParto}"></a></td>
+							<td th:text="${parto.fechaParto}"></td>
+							<td th:text="${parto.nroCrias}"></td>
+							<td th:text="${parto.fechaProximoCelo}"></td>							 														
 							<td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-primary btn-xs"
-								th:href="@{/controles/form/} + ${control.codControl}" th:text="'editar'"></a></td>
+								th:href="@{/partos/form/} + ${parto.codParto}" th:text="'editar'"></a></td>
 							<td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-danger btn-xs"
-								th:href="@{/controles/eliminar/} + ${control.codControl}" th:text="'eliminar'"
+								th:href="@{/partos/eliminar/} + ${parto.codParto}" th:text="'eliminar'"
 								onclick="return confirm('Estas seguro que quieres eliminar?');"></a></td>
 						</tr>
 					</tbody>
@@ -52,9 +48,7 @@
 			</div>
 		</div>
 
-
 	</div>
-
 	<footer th:replace="layout/layout :: footer"></footer>
 </body>
 </html>

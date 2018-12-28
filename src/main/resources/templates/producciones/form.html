@@ -12,14 +12,14 @@
 			<div class="card-header bg-primary text-white" th:text="${titulo}"></div>
 			<div class="card-body">
 
-				<div th:object="${control}" th:remove="tag">
+				<div th:object="${produccion}" th:remove="tag">
 					<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
 						role="alert">
 						<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
 					</ul>
 				</div>
 
-				<form th:action="@{/controles/form}" th:object="${control}" method="post">					
+				<form th:action="@{/producciones/form}" th:object="${produccion}" method="post">					
 					<div class="form-group row">
 						<label for="animal" class="col-sm-2 col-form-label">Animal</label>
 						<div class="col-sm-6">							
@@ -30,45 +30,37 @@
 								</select>
 						</div>
 					</div>
+						
+					<div class="form-group row">
+						<label for="pesoProduccion" class="col-sm-2 col-form-label">Peso Kg</label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control" th:field="*{pesoProduccion}" th:value="0"
+								th:errorclass="'form-control alert-danger'" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('pesoProduccion')}" th:errors="*{pesoProduccion}"></small>
+						</div>
+					</div>
+														
+					<div class="form-group row">
+						<label for="fechaOrdeño" class="col-sm-2 col-form-label">Fecha Ordeño</label>
+						<div class="col-sm-6">
+							<input type="date" th:field="*{fechaOrdenio}" class="form-control"
+								th:errorclass="'form-control alert-danger'" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('fechaOrdenio')}" th:errors="*{fechaOrdenio}"></small>
+						</div>
+					</div>
+					
+					
 					
 					<div class="form-group row">
-						<label for="evento" class="col-sm-2 col-form-label">Evento</label>
+						<label for="turno" class="col-sm-2 col-form-label">Turno</label>
 						<div class="col-sm-6">							
-								<select class="custom-select" th:field="*{evento.codEvento}">								    
-								    <option th:each="e: ${eventos}"
-									th:value="${e.codEvento}"
-									th:text="${e.descripcion}"></option>
+								<select class="custom-select" th:field="*{turno}">								    
+								    <option th:value="'MAÑANA'" th:text="'MAÑANA'"></option>
+								    <option th:value="'TARDE'" th:text="'TARDE'"></option>
+							        <option th:value="'NOCHE'" th:text="'NOCHE'"></option>
 								</select>
-						</div>
-					</div>
-					
-					<div class="form-group row">
-						<label for="fechaControl" class="col-sm-2 col-form-label">Fecha</label>
-						<div class="col-sm-6">
-							<input type="date" th:field="*{fechaControl}" class="form-control"
-								th:errorclass="'form-control alert-danger'" /> <small
-								class="form-text text-danger"
-								th:if="${#fields.hasErrors('fechaControl')}" th:errors="*{fechaControl}"></small>
-						</div>
-					</div>
-					
-					<div class="form-group row">
-						<label for="peso" class="col-sm-2 col-form-label">Peso KG</label>
-						<div class="col-sm-6">
-							<input type="text" class="form-control" th:field="*{peso}" th:value="0"
-								th:errorclass="'form-control alert-danger'" /> <small
-								class="form-text text-danger"
-								th:if="${#fields.hasErrors('peso')}" th:errors="*{peso}"></small>
-						</div>
-					</div>
-					
-					<div class="form-group row">
-						<label for="observacion" class="col-sm-2 col-form-label">Observación</label>
-						<div class="col-sm-6">
-							<input type="text" class="form-control" th:field="*{observacion}"
-								th:errorclass="'form-control alert-danger'" /> <small
-								class="form-text text-danger"
-								th:if="${#fields.hasErrors('observacion')}" th:errors="*{observacion}"></small>
 						</div>
 					</div>
 					

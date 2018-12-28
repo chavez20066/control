@@ -12,6 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 @Entity
@@ -28,8 +32,10 @@ public class Produccion implements Serializable{
 	@Column(name ="cod_produccion")
 	private Long codProduccion;
 	
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@Column(name ="fecha_ordenio")
-	private Date fechaOrdeño;
+	private Date fechaOrdenio;
 	
 	@Column(name ="peso_produccion")
 	private float pesoProduccion;
@@ -67,12 +73,12 @@ public class Produccion implements Serializable{
 		this.codProduccion = codProduccion;
 	}
 
-	public Date getFechaOrdeño() {
-		return fechaOrdeño;
+	public Date getFechaOrdenio() {
+		return fechaOrdenio;
 	}
 
-	public void setFechaOrdeño(Date fechaOrdeño) {
-		this.fechaOrdeño = fechaOrdeño;
+	public void setFechaOrdenio(Date fechaOrdeño) {
+		this.fechaOrdenio = fechaOrdeño;
 	}
 
 	public float getPesoProduccion() {

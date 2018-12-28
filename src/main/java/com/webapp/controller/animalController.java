@@ -24,6 +24,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -95,7 +96,7 @@ public class AnimalController {
 
 		model.put("edad", Edad);
 		model.put("animal", animal);
-		model.put("titulo", "Detalle cliente: " + animal.getNombre());
+		model.put("titulo", "Detalle del Animal: " + animal.getNombre());
 		return "/animales/ver";
 	}
 
@@ -118,7 +119,29 @@ public class AnimalController {
 		model.addAttribute("classActiveAnimales","active");
 		return "/animales/listar";
 	}
+	
+	@Secured("ROLE_ADMIN")
+	@PostMapping("/animales/buscar")
+	public String buscar(@RequestParam(name = "txt_animal") String term, Model model,
+			Authentication authentication, HttpServletRequest request) {
+		if (authentication != null) {
+			LOG.info("Hola usuario autenticado, tu username es: ".concat(authentication.getName()));
+		}
 
+		//Page<Animal> animales = animalService.findAll(pageRequest);
+
+		List<Animal> animales=animalService.findByNombreAndCodAnimal(term);
+		
+		//PageRender<Animal> pageRender = new PageRender<Animal>("listar", (Page<Animal>) animales); // ruta del paginador
+		//PageRender<Animal> pageRender=new Pa
+		model.addAttribute("titulo", "Resultado de Busqueda: " + term);
+		model.addAttribute("animales", animales);
+		model.addAttribute("page", null);
+		model.addAttribute("classActiveAnimales","active");
+		return "/animales/listar";
+	}
+
+	
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/animales/form")
 	public String crear(Map<String, Object> model) {

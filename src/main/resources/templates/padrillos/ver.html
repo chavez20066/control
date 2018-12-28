@@ -20,7 +20,7 @@
 				<!--  th:if="${#lists.isEmpty(cliente.facturas)} -->
 						
 				<ul class="list-group">
-					<li class="list-group-item active" th:text="${padrillo.nombre}"></li>
+					<li class="list-group-item active" th:text="${padrillo.codPadrillo}+'-'+${padrillo.nombre}"></li>
 					<li class="list-group-item">						
 						<div class="form-group row">
 						<label class="col-sm-2 col-form-label"><strong>Nombre</strong></label>

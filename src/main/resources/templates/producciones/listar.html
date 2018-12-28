@@ -15,34 +15,32 @@
 			<div class="card-body">
 
 				  <h4 class="card-title">
-					<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/controles/form}" class="btn btn-primary btn-xs">Registrar Control</a>
+					<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/producciones/form}" class="btn btn-primary btn-xs">Registrar Produccion</a>
 				</h4>
 				<table class="table table-striped table-bordered">
 					<thead class="thead-inverse">
 						<tr>
 							<th sec:authorize="hasRole('ROLE_USER')">Código</th>
 							<th>Animal</th>
-							<th>Evento</th>
+							<th>Peso Kg</th>
 							<th>Fecha</th>
-							<th>Peso</th>
-							<th>Observación</th>
+							<th>Turno</th>
 							<th sec:authorize="hasRole('ROLE_ADMIN')">editar</th>
 							<th sec:authorize="hasRole('ROLE_ADMIN')">eliminar</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="control: ${controles}">
+						<tr th:each="produccion: ${producciones}">
 							<td sec:authorize="hasRole('ROLE_USER')"><a class="btn btn-primary btn-xs" 
-							th:href="@{/controles/ver/} + ${control.codControl}" th:text="${control.codControl}"></a></td>
-							<td th:text="${control.animal.nombre}"></td>
-							<td th:text="${control.evento.descripcion}"></td>
-							<td th:text="${control.fechaControl}"></td>
-							<td th:text="${control.peso}"></td>  
-							<td th:text="${control.observacion}"></td>							
+							th:href="@{/producciones/ver/} + ${produccion.codProduccion}" th:text="${produccion.codProduccion}"></a></td>
+							<td th:text="${produccion.animal.nombre}"></td>
+							<td th:text="${produccion.pesoProduccion}"></td>
+							<td th:text="${produccion.fechaOrdenio}"></td>
+							<td th:text="${produccion.turno}"></td>  														
 							<td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-primary btn-xs"
-								th:href="@{/controles/form/} + ${control.codControl}" th:text="'editar'"></a></td>
+								th:href="@{/producciones/form/} + ${produccion.codProduccion}" th:text="'editar'"></a></td>
 							<td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-danger btn-xs"
-								th:href="@{/controles/eliminar/} + ${control.codControl}" th:text="'eliminar'"
+								th:href="@{/producciones/eliminar/} + ${produccion.codProduccion}" th:text="'eliminar'"
 								onclick="return confirm('Estas seguro que quieres eliminar?');"></a></td>
 						</tr>
 					</tbody>
@@ -52,9 +50,7 @@
 			</div>
 		</div>
 
-
 	</div>
-
 	<footer th:replace="layout/layout :: footer"></footer>
 </body>
 </html>

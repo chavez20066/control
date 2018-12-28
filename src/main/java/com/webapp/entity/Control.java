@@ -12,6 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 @Entity
@@ -28,6 +32,8 @@ public class Control implements Serializable {
 	@Column(name ="cod_control")
 	private Long codControl;
 	
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@Column(name ="fecha_control")
 	private Date fechaControl;
 	
@@ -43,7 +49,6 @@ public class Control implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Evento evento;
-	
 	
 		
 
@@ -93,6 +98,12 @@ public class Control implements Serializable {
 
 	public void setEvento(Evento evento) {
 		this.evento = evento;
+	}
+
+	@Override
+	public String toString() {
+		return "Control [codControl=" + codControl + ", fechaControl=" + fechaControl + ", peso=" + peso
+				+ ", observacion=" + observacion + ", animal=" + animal.getCodAnimal() + ", evento=" + evento.getDescripcion() + "]";
 	}
 	
 	
