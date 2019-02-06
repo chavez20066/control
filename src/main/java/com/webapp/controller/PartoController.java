@@ -58,7 +58,7 @@ public class PartoController {
 		Page<Parto> partos=partoService.findAll(pageRequest);
 		
 		PageRender<Parto> pageRender = new PageRender<Parto>("/partos/listar", partos); // ruta del paginador
-		model.addAttribute("titulo", "Listado de producciones");
+		model.addAttribute("titulo", "Listado de partos");
 		model.addAttribute("partos", partos);
 		model.addAttribute("page", pageRender);
 		model.addAttribute("classActivePartos","active");
@@ -139,13 +139,10 @@ public class PartoController {
 		}
 		
 		List<Animal> animales = animalService.finAllOrderByNombre();
-		
 				
 		model.put("parto", parto);
 		model.put("animales", animales);		
-		model.put("titulo", "Editar Parto");	
-		
-		
+		model.put("titulo", "Editar Parto");			
 		return "/partos/form";
 	}
 	

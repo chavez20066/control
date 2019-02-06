@@ -1,10 +1,6 @@
 package com.webapp.controller;
 
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -32,13 +28,9 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.webapp.entity.Animal;
-import com.webapp.entity.Control;
-import com.webapp.entity.Evento;
 import com.webapp.entity.Produccion;
 import com.webapp.paginator.PageRender;
 import com.webapp.service.AnimalService;
-import com.webapp.service.ControlService;
-import com.webapp.service.EventoService;
 import com.webapp.service.ProduccionService;
 
 @Controller
@@ -53,8 +45,6 @@ public class ProduccionController {
 	@Autowired
 	private ProduccionService produccionService;
 	
-	@Autowired
-	private EventoService eventoService;
 	
 	@Secured("ROLE_ADMIN")
 	@GetMapping("/producciones/listar")

@@ -37,9 +37,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.webapp.entity.Usuario;
 import com.webapp.repository.UsuarioRepository;
 import com.webapp.service.AnimalService;
+import com.webapp.service.ControlService;
 import com.webapp.service.IUploadFileService;
 import com.webapp.service.PadrilloService;
 import com.webapp.entity.Animal;
+import com.webapp.entity.Control;
 import com.webapp.entity.Padrillo;
 import com.webapp.paginator.PageRender;
 
@@ -61,6 +63,9 @@ public class AnimalController {
 
 	@Autowired
 	private IUploadFileService uploadFileService;
+	
+	@Autowired
+	private ControlService controlService;
 
 	@RequestMapping(value = { "/home" })
 	public ModelAndView home(Authentication authentication) {
@@ -78,6 +83,8 @@ public class AnimalController {
 
 		// Cliente cliente = clienteService.fetchByIdWithFacturas(id);
 		Animal animal = animalService.findByCodAnimal(codAnimal);
+		//List<Control> controles=controlService.findBy
+		//animal.setC
 
 		if (animal == null) {
 			flash.addFlashAttribute("error", "El animal no existe en la base de datos");

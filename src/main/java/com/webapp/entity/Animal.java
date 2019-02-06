@@ -65,11 +65,11 @@ public class Animal  implements Serializable{
 	@JoinColumn(name = "animales_cod_animal")
 	private List<Parto> partos;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.LAZY/*, cascade = CascadeType.ALL, orphanRemoval = true*/)
 	@JoinColumn(name = "animales_cod_animal")
 	private List<Produccion> producciones;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.LAZY/*, cascade = CascadeType.ALL, orphanRemoval = true*/)
 	@JoinColumn(name = "animales_cod_animal")
 	private List<Control> controles;
 

@@ -14,7 +14,7 @@
 			<div class="card-header bg-primary text-white" th:text="${titulo}"></div>
 			<div class="card-body">
 
-				  <h4 class="card-title">
+				<h4 class="card-title">
 					<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/controles/form}" class="btn btn-primary btn-xs">Registrar Control</a>
 				</h4>
 				<table class="table table-striped table-bordered">

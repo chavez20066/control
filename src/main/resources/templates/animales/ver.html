@@ -12,7 +12,7 @@
 			<div class="card-header" th:text="${titulo}"></div>
 			<div class="card-body">
 
-				<h4 class="card-title">
+				<h4 class="card-title text-center">
 					<a class="btn btn-primary btn-xs"
 						th:href="@{'/controles/form/' + ${animal.codAnimal}}"
 						th:text="'Registrar control'"></a>
@@ -130,6 +130,83 @@
 					</tbody>
 
 				</table>-->
+				<br>
+				<h4 class="card-title">Controles</h4>
+				
+				<div th:if="${#lists.isEmpty(animal.controles)}"
+					class="alert alert-info my-4"
+					th:text="'No hay controles asignados para el animal ' + ${animal.nombre} "></div>
+					
+				<table th:if="${not #lists.isEmpty(animal.controles)}" class="table table-striped table-bordered">
+					<thead class="thead-inverse">
+						<tr>
+							<th sec:authorize="hasRole('ROLE_USER')">Código</th>
+							<th>Animal</th>
+							<th>Evento</th>
+							<th>Fecha</th>
+							<th>Peso</th>
+							<th>Observación</th>
+							<th sec:authorize="hasRole('ROLE_ADMIN')">editar</th>
+							<th sec:authorize="hasRole('ROLE_ADMIN')">eliminar</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="control: ${animal.controles}">
+							<td sec:authorize="hasRole('ROLE_USER')"><a class="btn btn-primary btn-xs" 
+							th:href="@{/controles/ver/} + ${control.codControl}" th:text="${control.codControl}"></a></td>
+							<td th:text="${control.animal.nombre}"></td>
+							<td th:text="${control.evento.descripcion}"></td>
+							<td th:text="${control.fechaControl}"></td>
+							<td th:text="${control.peso}"></td>  
+							<td th:text="${control.observacion}"></td>							
+							<td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-primary btn-xs"
+								th:href="@{/controles/form/} + ${control.codControl}" th:text="'editar'"></a></td>
+							<td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-danger btn-xs"
+								th:href="@{/controles/eliminar/} + ${control.codControl}" th:text="'eliminar'"
+								onclick="return confirm('Estas seguro que quieres eliminar?');"></a></td>
+						</tr>
+					</tbody>
+
+				</table>
+				<!--  <nav th:replace="paginator-nav :: paginator"></nav>-->
+				
+				<br>
+				<h4 class="card-title">Produciones</h4>
+				
+				<div th:if="${#lists.isEmpty(animal.producciones)}"
+					class="alert alert-info my-4"
+					th:text="'No hay producciones registradas para el animal ' + ${animal.nombre} "></div>
+					
+				<table th:if="${not #lists.isEmpty(animal.producciones)}" class="table table-striped table-bordered">
+					<thead class="thead-inverse">
+						<tr>
+							<th sec:authorize="hasRole('ROLE_USER')">Código</th>
+							<th>Animal</th>
+							<th>Peso Kg</th>
+							<th>Fecha</th>
+							<th>Turno</th>
+							<th sec:authorize="hasRole('ROLE_ADMIN')">editar</th>
+							<th sec:authorize="hasRole('ROLE_ADMIN')">eliminar</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="produccion: ${producciones}">
+							<td sec:authorize="hasRole('ROLE_USER')"><a class="btn btn-primary btn-xs" 
+							th:href="@{/producciones/ver/} + ${produccion.codProduccion}" th:text="${produccion.codProduccion}"></a></td>
+							<td th:text="${produccion.animal.nombre}"></td>
+							<td th:text="${produccion.pesoProduccion}"></td>
+							<td th:text="${produccion.fechaOrdenio}"></td>
+							<td th:text="${produccion.turno}"></td>  														
+							<td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-primary btn-xs"
+								th:href="@{/producciones/form/} + ${produccion.codProduccion}" th:text="'editar'"></a></td>
+							<td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-danger btn-xs"
+								th:href="@{/producciones/eliminar/} + ${produccion.codProduccion}" th:text="'eliminar'"
+								onclick="return confirm('Estas seguro que quieres eliminar?');"></a></td>
+						</tr>
+					</tbody>
+				</table>
+				
+				<!--  <nav th:replace="paginator-nav :: paginator"></nav>-->
 
 			</div>
 		</div>
