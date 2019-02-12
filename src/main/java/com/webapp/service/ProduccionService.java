@@ -20,4 +20,6 @@ public interface ProduccionService {
 	
 	public void delete(Long codProduccion);
 	
+	public List<Produccion> findByCodAnimal(Long codAnimal);
+	
 }

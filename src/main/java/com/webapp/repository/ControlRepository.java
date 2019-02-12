@@ -11,8 +11,8 @@ import com.webapp.entity.Control;
 public interface ControlRepository extends PagingAndSortingRepository<Control, Long>{
 	
 	public Control findByCodControl(Long codControl);
-	
-	//@Query("select a from Animal a where a.nombre like %?1% or a.codAnimal=?1")
-	//public List<Control> findByCodAnimal(Long codAnimal);
+			
+	@Query("select c from Control c where c.animal.codAnimal=?1")
+	public List<Control> findByCodAnimal(Long codAnimal);
 
 }

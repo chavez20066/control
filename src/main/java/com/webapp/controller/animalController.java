@@ -1,10 +1,13 @@
 package com.webapp.controller;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -40,9 +43,13 @@ import com.webapp.service.AnimalService;
 import com.webapp.service.ControlService;
 import com.webapp.service.IUploadFileService;
 import com.webapp.service.PadrilloService;
+import com.webapp.service.PartoService;
+import com.webapp.service.ProduccionService;
 import com.webapp.entity.Animal;
 import com.webapp.entity.Control;
 import com.webapp.entity.Padrillo;
+import com.webapp.entity.Parto;
+import com.webapp.entity.Produccion;
 import com.webapp.paginator.PageRender;
 
 @Controller
@@ -67,6 +74,12 @@ public class AnimalController {
 	@Autowired
 	private ControlService controlService;
 
+	@Autowired
+	private ProduccionService produccionService;
+	
+	@Autowired
+	private PartoService partoService;
+	
 	@RequestMapping(value = { "/home" })
 	public ModelAndView home(Authentication authentication) {
 		Usuario usuario = usuarioRepository.findByUsername(authentication.getName());
@@ -79,12 +92,16 @@ public class AnimalController {
 
 	@GetMapping(value = "/animales/ver/{codAnimal}")
 	public String ver(@PathVariable(value = "codAnimal") Long codAnimal, Map<String, Object> model,
-			RedirectAttributes flash) {
+			RedirectAttributes flash) throws ParseException {
 
 		// Cliente cliente = clienteService.fetchByIdWithFacturas(id);
 		Animal animal = animalService.findByCodAnimal(codAnimal);
-		//List<Control> controles=controlService.findBy
-		//animal.setC
+		List<Control> controles=controlService.findByCodAnimal(codAnimal);
+		
+		List<Produccion> producciones=produccionService.findByCodAnimal(codAnimal);
+		
+		List<Parto> partos= partoService.findByCodAnimal(codAnimal);
+		
 
 		if (animal == null) {
 			flash.addFlashAttribute("error", "El animal no existe en la base de datos");
@@ -92,8 +109,8 @@ public class AnimalController {
 		}
 
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		LocalDate fechaNac = LocalDate.parse(new SimpleDateFormat("dd/MM/yyyy").format(animal.getFechaNacimiento()),
-				fmt);
+		
+		LocalDate fechaNac = LocalDate.parse(new SimpleDateFormat("dd/MM/yyyy").format(animal.getFechaNacimiento()),fmt);
 		LocalDate ahora = LocalDate.now();
 
 		Period periodo = Period.between(fechaNac, ahora);
@@ -101,8 +118,161 @@ public class AnimalController {
 				periodo.getDays());
 		String Edad = periodo.getYears() + " años, " + periodo.getMonths() + " meses, " + periodo.getDays() + " dias";
 
+		
+		
+		
+		/*SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date fechaInicial=dateFormat.parse("2019-02-07");
+		Date fechaFinal=dateFormat.parse("2019-02-08");
+ 
+		diaLactancia=(int) ((fechaFinal.getTime()-fechaInicial.getTime())/86400000);*/
+		
+		
+		//int dias=(int) ((fechaFinal.getTime()-fechaInicial.getTime())/86400000);
+		
+		/* Indicadores
+		1.- dia de lactancia (Fecha actual - fecha de parto)
+		2.- kilos promedio de su produccion
+		4.- Fecha posible de Celo 
+		5.- Fecha posible de Seca
+		3.- Fecha posible de Parto
+		
+		*/
+		
+		int diaLactancia;
+		float kgProduccion;		
+		String FechaCelo=null,FechaSeca=null,FechaParto = null;
+		
+		/*INDICADOR 1*/
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		Calendar calendar = Calendar.getInstance();
+		Parto UltimoParto=partos.get(partos.size()-1);
+		//Date fechaActual=fmt.parse(cal.getTime());
+		String strDate = sdf.format(calendar.getTime());
+		
+		Date FechaActual = sdf.parse(strDate);
+		
+		diaLactancia=(int) (((FechaActual.getTime()-UltimoParto.getFechaParto().getTime())/86400000));
+		
+		/*INDICADOR 2*/
+		Produccion produccion=producciones.get(producciones.size()-1);
+		kgProduccion=produccion.getPesoProduccion();
+		
+		/*INDICADOR 3 FECHA DE CELO*/
+		Control control=null;
+		for(int i =controles.size()-1;i>=0;i--) {			
+			if(controles.get(i).getEvento().getCodEvento()==5) { // busca un control de tipo limpieza uterina
+				control=controles.get(i);
+				break;
+			}
+		}
+		if(control!=null) {
+			
+			 LOG.info("FECHA ULTIMO CELO: "+ UltimoParto.getFechaProximoCelo().toString() );
+			 LOG.info("FECHA CONTROL UTERINO: "+ control.getFechaControl().toString() );
+			 
+			if(UltimoParto.getFechaProximoCelo().getTime()>control.getFechaControl().getTime()) {
+				FechaCelo=UltimoParto.getFechaProximoCelo().toString();
+			}
+			else {
+				// si la fecha del lavado uterino es mas reciente que la estimada del lavado uterino
+				 LOG.info("CALCULANDO FECHA");
+				 Calendar calendar2 = Calendar.getInstance();
+				 //SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+				 calendar2.setTime(control.getFechaControl()); // Configuramos la fecha que se recibe
+				 calendar2.add(Calendar.DAY_OF_YEAR, 21);  // añade 21 dias apartir de la fecha de limpieza0
+				 FechaCelo = sdf.format(calendar2.getTime());
+			}			
+		}else {
+			FechaCelo=UltimoParto.getFechaProximoCelo().toString();
+		}
+		/*INDICADOR 4 FECHA DE SECA*/
+		/*para calcular la fecha de seca tengo que partir de la fecha de parto
+		 * sumarle dos meses a la fecha de parto tengo la fecha de inseminacion
+		 * si el animal fecunda eso lo compruebo a los 21 dias del dia de inseminacion
+		 * sumarle 7 meses desde la fecha de fecundación  */
+		
+		/* fechaCelo= a fecha de Inseminación */
+		/*algoritmo
+		 * buscar un control tipo inseminación apartir de esa fecha sumarle 7 meses
+		 * comprobar que se a fecundado 
+		 * */
+		
+		Control controlInseminacion=null;
+		Calendar calendar3 = Calendar.getInstance();
+		Date DateCelo=null;
+	    int CtrlInse=0;
+		for(int i =controles.size()-1;i>=0;i--) {			
+			if(controles.get(i).getEvento().getCodEvento()==3) { // busca un control de tipo Inseminacion
+				controlInseminacion=controles.get(i);
+				break;
+			}
+		}
+		if(controlInseminacion!=null) {			
+		    DateCelo = sdf.parse(FechaCelo);
+			if(controlInseminacion.getFechaControl().getTime()>=DateCelo.getTime()) {
+				 CtrlInse=1;
+				 calendar3.setTime(controlInseminacion.getFechaControl()); // Configuramos la fecha que se recibe
+				 calendar3.add(Calendar.MONTH, 7);  // numero de días a añadir, o restar en caso de días<0	
+				 FechaSeca = sdf.format(calendar3.getTime());		
+			}
+			else {
+				// si la fecha de inseminacion no es mayor o igual que la fecha de celo
+				 calendar3.setTime(DateCelo); // Configuramos la fecha que se recibe
+				 calendar3.add(Calendar.MONTH, 7);  // numero de días a añadir, o restar en caso de días<0	
+				 FechaSeca = sdf.format(calendar3.getTime());			
+			}			 
+		}
+		else {	
+			 CtrlInse=0;
+			 DateCelo = sdf.parse(FechaCelo);
+			 calendar3.setTime(DateCelo); // Configuramos la fecha que se recibe
+			 calendar3.add(Calendar.MONTH, 7);  // numero de días a añadir, o restar en caso de días<0	
+			 FechaSeca = sdf.format(calendar3.getTime());			
+		}
+				 
+		 
+		/* Indicador 4 Fecha de Parto*/
+		 Date dateSeca=null;
+		 dateSeca = sdf.parse(FechaSeca);	 
+		 
+		 Calendar calendar4 = Calendar.getInstance();			 
+		 calendar4.setTime(dateSeca); // Configuramos la fecha que se recibe
+		 calendar4.add(Calendar.MONTH, 2);  // numero de días a añadir, o restar en caso de días<0	
+		 FechaParto = sdf.format(calendar4.getTime());
+		 
+		  
+		 
+		 
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		model.put("diaLactancia", diaLactancia);
+		model.put("kgProduccion", kgProduccion);
+		model.put("FechaCelo", FechaCelo);
+		model.put("FechaSeca", FechaSeca);
+		model.put("FechaParto", FechaParto);
+		//model.put("CtrlInse", CtrlInse);
+		
+		if(CtrlInse==1) {
+			model.put("inse_success", "Animal Inseminado correctamento.");
+		}else {
+			model.put("inse_error", "Animal NO Inseminado, si esto es un error crear un control de tipo inseminacion, con fecha mayor o igual a la fecha de celo estimada");
+		}
+		
 		model.put("edad", Edad);
 		model.put("animal", animal);
+		model.put("controles", controles);
+		model.put("producciones", producciones);
+		model.put("partos", partos);
 		model.put("titulo", "Detalle del Animal: " + animal.getNombre());
 		return "/animales/ver";
 	}

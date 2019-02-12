@@ -20,4 +20,6 @@ public interface ControlService {
 	
 	public void delete(Long codControl);
 	
+	public List<Control> findByCodAnimal(Long codAnimal);
+	
 }

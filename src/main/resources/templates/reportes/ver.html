@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<meta charset="UTF-8" />
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container py-4">
+
+		<div class="card bg-light">
+			<div class="card-header" th:text="${titulo}"></div>
+			<div class="card-body">
+			
+				<ul class="list-group">
+					<li class="list-group-item active" th:text="${parto.animal.codAnimal} + '-' + ${parto.animal.nombre}"></li>
+					<li class="list-group-item">						
+						<div class="form-group row">
+						<label class="col-sm-2 col-form-label"><strong>Fecha Parto</strong></label>
+							<div class="col-sm-6">
+								<input type="text" disabled th:field="*{parto.fechaParto}" class="form-control"/>
+							</div>
+						</div>						
+					</li>
+					
+					<li class="list-group-item">
+						<div class="form-group row">
+						<label class="col-sm-2 col-form-label"><strong>Numero de Crias</strong></label>
+							<div class="col-sm-6">
+								<input type="text" disabled th:field="*{parto.nroCrias}" class="form-control"/>
+							</div>
+						</div>	
+					</li>
+					<li class="list-group-item">
+						<div class="form-group row">
+						<label class="col-sm-2 col-form-label"><strong>Fecha Proximo Celo</strong></label>
+							<div class="col-sm-6">
+								<input type="text" disabled th:field="*{parto.fechaProximoCelo}" class="form-control"/>
+							</div>
+						</div>	
+					</li>
+										
+				</ul>
+
+
+			</div>
+		</div>
+
+	</div>
+
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

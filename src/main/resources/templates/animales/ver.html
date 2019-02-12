@@ -11,18 +11,7 @@
 		<div class="card bg-light">
 			<div class="card-header" th:text="${titulo}"></div>
 			<div class="card-body">
-
-				<h4 class="card-title text-center">
-					<a class="btn btn-primary btn-xs"
-						th:href="@{'/controles/form/' + ${animal.codAnimal}}"
-						th:text="'Registrar control'"></a>
-					<a class="btn btn-success btn-xs"
-						th:href="@{'/partos/form/' + ${animal.codAnimal}}"
-						th:text="'Registrar Parto'"></a>
-					<a class="btn btn-danger btn-xs"
-						th:href="@{'/producciones/form/' + ${animal.codAnimal}}"
-						th:text="'Registrar Producción'"></a>
-				</h4>
+				
 				<!--  th:if="${#lists.isEmpty(cliente.facturas)} -->
 				
 				<!-- <img th:if="${#strings.length(animal.foto) > 0}"-->
@@ -130,14 +119,56 @@
 					</tbody>
 
 				</table>-->
+				
+				<!-- Indicadores
+				1.- dia de lactancia
+				2.- kilos promedio de su produccion				
+				4.- Fecha posible de Celo 
+				5.- Fecha posible de Seca
+				3.- Fecha posible de Parto
+				-->
+				<br>				
+                <div class="row pt-5 text-center"> 
+                	<div class="col-sm-2">
+              		    <label class="col-form-label"><strong>Día de Lactancia</strong></label>      	      		
+                		<a class="btn btn-primary btn-circle btn-xl text-white"  th:text="${diaLactancia}"></a>                		
+                	</div>
+                	<div class="col-sm-3">
+                		<label class="col-form-label"><strong>Kg Ultima Produccion</strong></label>      	      		
+                		<a class="btn btn-success btn-circle btn-xl text-white"  th:text="${kgProduccion}"></a>   
+                	</div>
+                	<div class="col-sm-3">
+                		<label class="col-form-label"><strong>Fecha Celo</strong></label>  <br>    	      		
+                		<a class="btn btn-info btn-circle btn-xl text-white" 
+                		style="font-size: 15px !important;padding-top: 15%;" th:text="${FechaCelo}"></a>                		
+                	</div>
+                	<div class="col-sm-2">
+                		<label class="col-form-label"><strong>Fecha Seca</strong></label>  <br>    	      		
+                		<a class="btn btn-danger btn-circle btn-xl text-white" 
+                		style="font-size: 15px !important;padding-top: 20%;" th:text="${FechaSeca}"></a>                		
+                	</div>
+                	<div class="col-sm-2">
+                		<label class="col-form-label"><strong>Fecha Parto</strong></label>  <br>    	      		
+                		<a class="btn btn-warning btn-circle btn-xl text-white" 
+                		style="font-size: 15px !important;padding-top: 20%;" th:text="${FechaParto}"></a>                		
+                	</div>
+                </div>
+				<br>
+				<div class="alert alert-success" th:if="${inse_success != null}" th:text="${inse_success}"></div>
+				<div class="alert alert-danger" th:if="${inse_error != null}" th:text="${inse_error}"></div>
+				
 				<br>
 				<h4 class="card-title">Controles</h4>
-				
-				<div th:if="${#lists.isEmpty(animal.controles)}"
+				<a class="btn btn-primary btn-xs"
+						th:href="@{'/controles/form/'}"
+						th:text="'Registrar control'"></a>
+				<br>		
+						
+				<div th:if="${#lists.isEmpty(controles)}"
 					class="alert alert-info my-4"
 					th:text="'No hay controles asignados para el animal ' + ${animal.nombre} "></div>
 					
-				<table th:if="${not #lists.isEmpty(animal.controles)}" class="table table-striped table-bordered">
+				<table th:if="${not #lists.isEmpty(controles)}" class="table table-striped table-bordered">
 					<thead class="thead-inverse">
 						<tr>
 							<th sec:authorize="hasRole('ROLE_USER')">Código</th>
@@ -151,7 +182,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="control: ${animal.controles}">
+						<tr th:each="control: ${controles}">
 							<td sec:authorize="hasRole('ROLE_USER')"><a class="btn btn-primary btn-xs" 
 							th:href="@{/controles/ver/} + ${control.codControl}" th:text="${control.codControl}"></a></td>
 							<td th:text="${control.animal.nombre}"></td>
@@ -172,12 +203,16 @@
 				
 				<br>
 				<h4 class="card-title">Produciones</h4>
+				<a class="btn btn-danger btn-xs"
+						th:href="@{'/producciones/form/'}"
+						th:text="'Registrar Producción'"></a>
+						<br>
 				
-				<div th:if="${#lists.isEmpty(animal.producciones)}"
+				<div th:if="${#lists.isEmpty(producciones)}"
 					class="alert alert-info my-4"
 					th:text="'No hay producciones registradas para el animal ' + ${animal.nombre} "></div>
 					
-				<table th:if="${not #lists.isEmpty(animal.producciones)}" class="table table-striped table-bordered">
+				<table th:if="${not #lists.isEmpty(producciones)}" class="table table-striped table-bordered">
 					<thead class="thead-inverse">
 						<tr>
 							<th sec:authorize="hasRole('ROLE_USER')">Código</th>
@@ -204,6 +239,48 @@
 								onclick="return confirm('Estas seguro que quieres eliminar?');"></a></td>
 						</tr>
 					</tbody>
+				</table>
+				
+				<br>
+				<h4 class="card-title">Partos</h4>
+				
+				<a class="btn btn-success btn-xs"
+						th:href="@{'/partos/form/'}"
+						th:text="'Registrar Parto'"></a>
+				<br>
+				
+				<div th:if="${#lists.isEmpty(partos)}"
+					class="alert alert-info my-4"
+					th:text="'No hay partos registradas para el animal ' + ${animal.nombre} "></div>
+				
+				<table th:if="${not #lists.isEmpty(partos)}" class="table table-striped table-bordered">
+					<thead class="thead-inverse">
+						<tr>
+							<th sec:authorize="hasRole('ROLE_USER')">Código</th>
+							<th>Animal</th>
+							<th>Fecha parto</th>
+							<th>Numero crías</th>
+							<th>Fecha proximo celo</th>							
+							<th sec:authorize="hasRole('ROLE_ADMIN')">editar</th>
+							<th sec:authorize="hasRole('ROLE_ADMIN')">eliminar</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="parto: ${partos}">
+							<td sec:authorize="hasRole('ROLE_USER')"><a class="btn btn-primary btn-xs" 
+							th:href="@{/partos/ver/} + ${parto.codParto}" th:text="${parto.codParto}"></a></td>
+							<td th:text="${parto.animal.nombre}"></td>
+							<td th:text="${parto.fechaParto}"></td>
+							<td th:text="${parto.nroCrias}"></td>
+							<td th:text="${parto.fechaProximoCelo}"></td>							 														
+							<td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-primary btn-xs"
+								th:href="@{/partos/form/} + ${parto.codParto}" th:text="'editar'"></a></td>
+							<td sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-danger btn-xs"
+								th:href="@{/partos/eliminar/} + ${parto.codParto}" th:text="'eliminar'"
+								onclick="return confirm('Estas seguro que quieres eliminar?');"></a></td>
+						</tr>
+					</tbody>
+
 				</table>
 				
 				<!--  <nav th:replace="paginator-nav :: paginator"></nav>-->

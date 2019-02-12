@@ -51,6 +51,18 @@ public class ControlServiceImpl implements ControlService {
 		controlRepository.deleteById(codControl);
 		
 	}
+
+	@Override
+	public List<Control> findByCodAnimal(Long codAnimal) {
+		// TODO Auto-generated method stub
+		return controlRepository.findByCodAnimal(codAnimal);
+	}
+
+	/*@Override
+	public Page<Control> findByCodAnimal(Pageable pageable, Long codAnimal) {
+		// TODO Auto-generated method stub
+		return null;
+	}*/
 	
 
 }

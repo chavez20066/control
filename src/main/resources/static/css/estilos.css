@@ -24,3 +24,22 @@
     opacity:0.8;
     transform:scale(1.05,1.05);  
 }
+
+.btn-circle.btn-xl {
+    width: 90px;
+    height: 90px;
+    padding: 10px;
+    border-radius: 46px;
+    font-size: 40px;
+    line-height: 1.33;
+}
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    padding: 6px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+}

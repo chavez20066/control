@@ -51,6 +51,12 @@ public class ProduccionServiceImpl implements ProduccionService {
 		produccionRepository.deleteById(codProduccion);
 		
 	}
+
+	@Override
+	public List<Produccion> findByCodAnimal(Long codAnimal) {
+		// TODO Auto-generated method stub
+		return produccionRepository.findByCodAnimal(codAnimal);
+	}
 	
 
 }

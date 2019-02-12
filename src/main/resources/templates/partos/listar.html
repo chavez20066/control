@@ -21,6 +21,7 @@
 					<thead class="thead-inverse">
 						<tr>
 							<th sec:authorize="hasRole('ROLE_USER')">Código</th>
+							<th>Animal</th>
 							<th>Fecha parto</th>
 							<th>Numero crías</th>
 							<th>Fecha proximo celo</th>							
@@ -32,6 +33,7 @@
 						<tr th:each="parto: ${partos}">
 							<td sec:authorize="hasRole('ROLE_USER')"><a class="btn btn-primary btn-xs" 
 							th:href="@{/partos/ver/} + ${parto.codParto}" th:text="${parto.codParto}"></a></td>
+							<td th:text="${parto.animal.nombre}"></td>
 							<td th:text="${parto.fechaParto}"></td>
 							<td th:text="${parto.nroCrias}"></td>
 							<td th:text="${parto.fechaProximoCelo}"></td>							 														

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8" />
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container py-4">
+
+		<div class="card">
+			<div class="card-header bg-primary text-white" th:text="${titulo}"></div>
+			<div class="card-body">
+
+				<div th:object="${parto}" th:remove="tag">
+					<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
+						role="alert">
+						<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+					</ul>
+				</div>
+
+				<form th:action="@{/partos/form}" th:object="${parto}" method="post">					
+					<div class="form-group row">
+						<label for="animal" class="col-sm-2 col-form-label">Animal</label>
+						<div class="col-sm-6">							
+								<select class="custom-select" th:field="*{animal.codAnimal}">								    
+								    <option th:each="m: ${animales}"
+									th:value="${m.codAnimal}"
+									th:text="${m.nombre}"></option>
+								</select>
+						</div>
+					</div>
+						
+					<div class="form-group row">
+						<label for="fechaParto" class="col-sm-2 col-form-label">Fecha Parto</label>
+						<div class="col-sm-6">
+							<input type="date" class="form-control" th:field="*{fechaParto}"
+								th:errorclass="'form-control alert-danger'" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('fechaParto')}" th:errors="*{fechaParto}"></small>
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label for="nroCrias" class="col-sm-2 col-form-label">Numero de Crias</label>
+						<div class="col-sm-6">
+							<input type="number" class="form-control" th:field="*{nroCrias}" 
+								th:errorclass="'form-control alert-danger'" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('nroCrias')}" th:errors="*{nroCrias}"></small>
+						</div>
+					</div>
+														
+					<div class="form-group row">
+						<label for="fechaProximoCelo" class="col-sm-2 col-form-label">Fecha Proximo Celo</label>
+						<div class="col-sm-6">
+							<input type="date" th:field="*{fechaProximoCelo}" class="form-control"
+								th:errorclass="'form-control alert-danger'" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('fechaProximoCelo')}" th:errors="*{fechaProximoCelo}"></small>
+						</div>
+					</div>
+																							
+					
+					<div class="form-group row">
+						<div class="col-sm-6">
+							<input type="submit" th:value="${titulo}"
+								class="btn btn-primary" />
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

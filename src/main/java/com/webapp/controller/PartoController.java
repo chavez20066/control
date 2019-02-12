@@ -1,6 +1,13 @@
 package com.webapp.controller;
+/*
+ * gestacion 9 meses promedio intervalo de 276  a 283 dias
+ * entran en celo a los 21 dias intervalo 17 a 24 dias
+ * la inseminacion se debe dar desde las 12 hasta las 18 horas desde que aparece el celo
+ * produccion promedio 10 meses
+ * apartir del parto a los dos meses debe darse al celo una vaca
+ * */
 
-
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -106,7 +113,14 @@ public class PartoController {
 		}
 				
 		String mensajeFlash = (parto.getCodParto() != null) ? "Parto editada con éxito!"	: "Parto creado con éxito!";
-
+		if(parto.getCodParto() == null) {
+			 Calendar calendar = Calendar.getInstance();
+			 calendar.setTime(parto.getFechaParto()); // Configuramos la fecha que se recibe
+			 calendar.add(Calendar.MONTH, 2);  // numero de días a añadir, o restar en caso de días<0			 
+			 parto.setFechaProximoCelo(calendar.getTime());
+		}
+		
+		
 		LOG.info("guardar (): " + parto.toString());
 
 		partoService.save(parto);

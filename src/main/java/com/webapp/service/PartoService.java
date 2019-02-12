@@ -20,4 +20,6 @@ public interface PartoService {
 	
 	public void delete(Long codParto);
 	
+	public List<Parto> findByCodAnimal(Long codAnimal);
+	
 }

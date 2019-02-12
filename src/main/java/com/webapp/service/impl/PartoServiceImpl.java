@@ -51,6 +51,12 @@ public class PartoServiceImpl implements PartoService {
 		partoRepository.deleteById(codParto);
 		
 	}
+
+	@Override
+	public List<Parto> findByCodAnimal(Long codAnimal) {
+		// TODO Auto-generated method stub
+		return partoRepository.findByCodAnimal(codAnimal);
+	}
 	
 
 }
